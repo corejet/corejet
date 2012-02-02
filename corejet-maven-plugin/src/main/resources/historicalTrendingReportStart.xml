@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/yui/fonts-min.css" />
+		<script type="text/javascript" src="js/jquery-min-1.5.2.js"></script>
+		<script type="text/javascript" src="js/yui/yahoo-dom-event.js"></script>
+		<script type="text/javascript" src="js/yui/element-min.js"></script>
+		<script type="text/javascript" src="js/yui/tabview-min.js"></script>
+		<script type="text/javascript" src="js/yui/history-min.js"></script>
+		<script type="text/javascript" src="js/jquery.treeTable.min.js"></script>
+		<script type="text/javascript">
+			jQuery(function($) {
+			$("#trend").treeTable({clickableNodeNames: true});
+			});
+		</script>
+		<style type="text/css">
+			body {margin:0; padding:0;}
+		</style>
+		<title>Corejet Historic Report</title>
+	</head>
+	<body class="yui-skin-sam">

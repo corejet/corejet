@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requirementscatalogue project="Corejet Test Instance"
+	extractTime="2011-05-13 20:39:48">
+	<epic id="Security" title="Security">
+		<story id="CTI-1" title="As a user I can log in to the System"
+			points="3">
+			<scenario name="User successful login" testStatus="pass">
+				<given>there is a user 'joebloggs' with password 'password'</given>
+				<when>I try to log in with username 'joebloggs' and password
+					'password'</when>
+				<then>the system grants me access</then>
+				<then>I am taken to a home page</then>
+			</scenario>
+			<scenario name="Failed login" testStatus="pass">
+				<given>there is a user 'joebloggs' with password 'password'</given>
+				<when>I try to log in with username 'joebloggs' and password
+					'badpassword'</when>
+				<then>the system does not grant me access</then>
+				<then>I am taken back to the login page</then>
+				<then>I am shown an error message indicating that my username or
+					password was incorrect</then>
+			</scenario>
+		</story>
+	</epic>
+	<epic id="Search" title="Search">
+		<story id="CTI-2" title="As a user I can search for an article"
+			points="5">
+			<scenario name="Search for an existing article with multiple matches"
+				testStatus="pending">
+				<given>I am logged in to the system as a registered user</given>
+				<given>there are three articles with the word 'foo' in their titles
+				</given>
+				<when>I type 'foo' into a search box</when>
+				<then>I am shown a list of search results with three matches</then>
+				<then>I can see the first 10 words of each article as a summary
+				</then>
+			</scenario>
+			<scenario name="Search with no matches" testStatus="pending">
+				<given>I am logged in to the system as a registered user</given>
+				<given>there are no articles with the word 'bar' in their titles
+				</given>
+				<when>I type 'bar' into a search box</when>
+				<then>I am shown a search results page with no matches</then>
+				<then>the page contains a warning that no results were found</then>
+			</scenario>
+			<scenario name="Search for an existing article with exactly one match"
+				testStatus="pending">
+				<given>I am logged in to the system as a registered user</given>
+				<given>there is exactly one article with the word 'baz' in its title
+				</given>
+				<when>I type 'baz' into a search box</when>
+				<then>I am shown the article in full</then>
+			</scenario>
+		</story>
+	</epic>
+</requirementscatalogue>

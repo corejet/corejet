@@ -1,0 +1,12 @@
+.project
+.settings/
+.classpath
+.svn/
+target/
+
+**/.classpath
+**/.project
+**/.settings/
+**/.svn/
+svnignore
+**/target/
