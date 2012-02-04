@@ -1,0 +1,98 @@
+h1. Welcome to the CoreJet BDD Framework
+
+CoreJet is a business friendly BDD framework, designed to provide confidence and insight for users and product owners, whilst allowing developers to turn requirements into automated BDD tests with minimal fuss.  The framework focuses on providing requirements traceability and coverage analysis allowing for better visibilty of progress towards business goals. 
+
+Learn more on the "http://corejet.org":http://corejet.org website.
+
+h2. Getting started
+
+1. Download the CoreJet source and install it in your local maven repository
+
+bc. mvn clean install
+
+2. Add your chosen test implementation and story repository dependency to your maven project e.g.
+
+bc. <dependency>
+    <groupId>org.corejet</groupId>
+    <artifactId>corejet-junit-runner</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.corejet</groupId>
+  <artifactId>jira-story-repository</artifactId>
+</dependency>
+
+4. Create epic and story tickets in JIRA (or your chosen story repository)
+
+5. Populate all stories with their appropriate number of story points
+
+6. Create or use an existing field in your story tickets to link them to your epics
+
+7. Create or use an existing field in your story tickets to contain your acceptance criteria in the form of scenarios.  Scenarios should be written in BDD form e.g.
+
+bc. Scenario: User can downloads the latest version of CoreJet
+Given a user on the CoreJet.org website
+When they download the framework
+Then they are provided with the latest version
+
+8. Create a filter to list the the stories to be tested
+
+9. In your src/test/recources folder, create a corejet.properties file to point to your story repository e.g.
+
+bc. jira.soap.wsdl.url=https://myproject.jira.com/rpc/soap/jirasoapservice-v2?wsdl
+jira.username=username
+jira.password=password
+default.project=My Project Name
+jira.filter.id=12345
+jira.storypoints.fieldid=10060
+jira.epic.fieldid=
+jira.acceptancecriteria.fieldid=10088
+corejet.report.directory=${project.build.directory}/corejet
+
+10. Migrate your stories into test classes, this can be done using the "CoreJet-JIRA-Chrome-plugin":https://github.com/corejet/CoreJet-JIRA-Chrome-plugin examples can be seen in SimpleBddTest.java
+
+11. In order to generate the reports, add the following maven plugin to your project
+
+bc. <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <configuration>
+    <testFailureIgnore>true</testFailureIgnore>
+  </configuration>
+</plugin>
+<!-- Generate a corejet report from the test run output -->
+<plugin>
+  <groupId>org.corejet</groupId>
+  <artifactId>corejet-maven-plugin</artifactId>
+  <version>${corejet.version}</version>
+  <executions>
+    <execution>
+      <phase>prepare-package</phase>
+      <goals>
+        <goal>generate-report</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+
+12. Reports are output to the target directory as corejet-repot.html and can be viewed from any HTML5 capable browser
+
+h2. CoreJet Modules
+
+CoreJet is made up of several distinct components designed to maximise the extensibility of the framework
+
+* corejet-core : The underlying test framework
+* corejet-jira-story : a JIRA specific implementation of the StoryRepository model
+* corejet-pageobject-support : support for UI testing through the Selenium 2.0 WebDriver framework
+* corejet-vizualisation : JavaScript and CSS to support the HTML reports
+* corejet-maven-plugin : Maven integration for the framework
+
+h2. Get the source
+
+Fork the project source code on "Github":http://github.com/corejet/corejet:
+
+bc. git clone git://github.com/corejet/corejet.git
+
+
+h2. Licence
+
+CoreJet framework is distributed under "Apache 2 licence":http://www.apache.org/licenses/LICENSE-2.0.html.
