@@ -82,9 +82,26 @@ CoreJet is made up of several distinct components designed to maximise the exten
 
 * corejet-core : The underlying test framework
 * corejet-jira-story : a JIRA specific implementation of the StoryRepository model
+* corejet-junit-runner : a JUnit specific implementation of the test runner
 * corejet-pageobject-support : support for UI testing through the Selenium 2.0 WebDriver framework
 * corejet-vizualisation : JavaScript and CSS to support the HTML reports
 * corejet-maven-plugin : Maven integration for the framework
+
+h2. Annotations
+
+Annotations are used in the framework to map test code to requirements as well as to track the progress of scenario development.
+
+Key annotations include:
+
+* @Story - Identifies a class as representing a BDD story
+* @StorySource - Maps the story to the StoryRepository implementation
+* @Scenario - Identifies an individual scenario within a story
+* @Given, @When, @Then - The steps that make up a scenario
+* @NotImplementedYet - A default annotation used to identify that the implementation of a scenario has not been completed
+* @NotAutomatable - Identifies a scenario that can not be tested using the framework
+* @AwaitingFunctionality - Identifies a scenario that's test has been written but the functionality has nt been delivered yet
+* @Defect - Stops a particular scenario from running due to a known defect
+* @CopyFromParent - Allows developers to share attributes between stories and scenarios
 
 h2. Get the source
 
