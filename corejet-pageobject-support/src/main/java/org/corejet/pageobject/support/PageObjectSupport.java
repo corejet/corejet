@@ -419,21 +419,5 @@ public class PageObjectSupport implements PageObject {
 		driver.navigate().back();
 	}
 	
-	/**
-	 * Switch to popup window
-	 */
-	public void switchToPopUpWindow() {
-		masterWindow = driver.getWindowHandle();
-		for (String window : driver.getWindowHandles()){
-			if (!masterWindow.equals(window)){
-				driver.switchTo().window(window);
-				waitForPageToLoad();
-				break;
-			}
-		}		
-	}
 
-	public void switchToMainWindow() {
-		driver.switchTo().window(masterWindow);		
-	}
 }
