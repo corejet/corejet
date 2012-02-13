@@ -66,6 +66,8 @@ public class HtmlReportGeneratorMojo extends AbstractMojo {
 	private static final String REPORT_DESTINATION = "/corejet-report.html";
 	private static final String TEST_OUTPUT_DESTINATION = "/corejet-report.xml";
 
+	private File vizualization;
+
 	/**  
 	 * @{inheritDoc}
 	 */
@@ -124,8 +126,6 @@ public class HtmlReportGeneratorMojo extends AbstractMojo {
 		// could not instantiate maven project in tests ,skip if null
 		if (null!=mavenProject){
 			try {
-				// Find the visualization dependency
-				File vizualization = null;
 				@SuppressWarnings("rawtypes")
 				Set artifacts = mavenProject.getDependencyArtifacts();
 				for (@SuppressWarnings("rawtypes")
@@ -135,21 +135,35 @@ public class HtmlReportGeneratorMojo extends AbstractMojo {
 						vizualization = artifact.getFile();
 					} 
 				}
+			} catch (Exception e) {
+				throw new MojoFailureException("Failed to extract visualization resources",e);
+			}
+		}
 
-				// getting the contents of the vizualization dependency
-				JarFile jarFile = new JarFile(vizualization);
+		if (null!=vizualization){
+
+			// getting the contents of the vizualization dependency
+			JarFile jarFile;
+			try {
+				jarFile = new JarFile(vizualization);
+
 				Enumeration<JarEntry> entries = jarFile.entries();
 				while (entries.hasMoreElements()) {
 					JarEntry jarEntry = (JarEntry) entries.nextElement();
+
+					String filePath = jarEntry.getName();
+					if (filePath.contains("META-INF")){
+						continue;
+					}
 					// Get the jar entry as a file
-					File reportFile = new File(corejetReportDirectory + File.separator + jarEntry.getName());
-					
+					File reportFile = new File(corejetReportDirectory + File.separator + filePath);
+
 					// if we are looking at a directory, create it and continue
-					if (reportFile.isDirectory()) {
+					if (jarEntry.isDirectory()) {
 						reportFile.mkdir();
 						continue;
 					}
-					
+
 					// copy the files
 					InputStream reportInput = jarFile.getInputStream(jarEntry);
 					FileOutputStream reportOutput = new FileOutputStream(reportFile);
@@ -158,13 +172,15 @@ public class HtmlReportGeneratorMojo extends AbstractMojo {
 					}
 					reportOutput.close();
 					reportInput.close();
-				}
-			} catch (Exception e) {
-				throw new MojoFailureException("Failed to extract visualization resources",e);
+				} 
+			} catch (IOException e) {
+				throw new MojoFailureException("Dependency could not be copied",e);
 			}
 		}
-
 	}
+
+
+
 
 
 	public void setMavenProject(MavenProject mavenProject) {
@@ -208,5 +224,14 @@ public class HtmlReportGeneratorMojo extends AbstractMojo {
 		this.corejetReportDirectory = corejetBaseDirectory;
 	}
 
+
+	public File getVizualization() {
+		return vizualization;
+	}
+
+
+	public void setVizualization(File vizualization) {
+		this.vizualization = vizualization;
+	}
 
 }
