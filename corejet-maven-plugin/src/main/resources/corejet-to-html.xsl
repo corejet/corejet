@@ -194,7 +194,7 @@
             	<tr>
                     <td></td>
                     <td><strong>Total</strong></td>
-                    <td><strong><xsl:value-of select="count(epic/story/scenario[@testStatus='fail'])"/>/<xsl:value-of select="count(epic/story/scenario)"/></strong></td>
+                    <td><strong><xsl:value-of select="count(epic/story/scenario[@testStatus='fail'])"/>/<xsl:value-of select="count(epic/story/scenario[@testStatus='fail']) + count(epic/story/scenario[@testStatus='pass'])"/></strong></td>
                 </tr>
             </tfoot>
         </table>
