@@ -101,7 +101,7 @@
 				</h1>
 				<h2>
 					Failures:
-					<span id="failures"><xsl:value-of select="count(//scenario[@testStatus='fail'])"/>/<xsl:value-of select="count(//scenario[@testStatus='pass'])+count(//scenario[@testStatus='fail'])"/></span>
+					<span id="failure-count"><xsl:value-of select="count(//scenario[@testStatus='fail'])"/>/<xsl:value-of select="count(//scenario[@testStatus='pass'])+count(//scenario[@testStatus='fail'])"/></span>
 				</h2>
 				<p>
 					Tested as of
