@@ -44,7 +44,24 @@
 				                   };
 				</script>				
 				<!-- =================== END - RUNNING_MAP ================ -->
+				
+				<!-- =================== TIMING_MAP ================ -->
+
+				<!-- Data -->				        
+				<script type="text/javascript" >    
+			       	 var json_timing = {
+				            'id':       'root',
+				            'name':     '<xsl:value-of select="@project"/>',
+				            'data':     {},
+				            'children': [
+				                            <xsl:apply-templates select="epic" mode="map_timing"/>
+				                        ]
+				                   };
+				</script>				
+				<!-- =================== END - TIMING_MAP ================ -->
 				<script type="text/javascript" src="js/viz.js"></script>
+				<script type="text/javascript" src="js/viz_running.js"></script>
+				<script type="text/javascript" src="js/viz_timing.js"></script>
 				
 				<!-- =================== SCOPE_DETAIL ================ -->
 				
@@ -140,15 +157,17 @@
   <ul class="yui-nav"> 
     <li><a href="#tab1"><em>Scope map</em></a></li> 
     <li><a href="#tab2"><em>Running tests</em></a></li> 
-    <li><a href="#tab3"><em>Scope detail</em></a></li> 
-    <li><a href="#tab4"><em>Failures</em></a></li> 
-    <li><a href="#tab5"><em>Defects</em></a></li> 
-    <li><a href="#tab6"><em>Problems</em></a></li> 
+    <li><a href="#tab3"><em>Test timings</em></a></li> 
+    <li><a href="#tab4"><em>Scope detail</em></a></li> 
+    <li><a href="#tab5"><em>Failures</em></a></li> 
+    <li><a href="#tab6"><em>Defects</em></a></li> 
+    <li><a href="#tab7"><em>Problems</em></a></li> 
   </ul> 
   <div class="yui-content"> 
     <div id="tab1">	<div id="infovis"></div></div> 
-    <div id="tab2">	<div id="infovis_running"></div></div> 
-    <div id="tab3">
+    <div id="tab2">	<div id="infovis_running"></div></div>
+    <div id="tab3">	<div id="infovis_timing"></div></div> 
+    <div id="tab4">
     	<br/>
 		<table id="requirements" style="table-layout: fixed">
             <thead>
@@ -177,13 +196,14 @@
             </tfoot>
         </table>
 	</div> 
-	<div id="tab4">
+	<div id="tab5">
 		<br/>
 		<table id="failures" style="table-layout: fixed">
             <thead>
                 <tr>
                     <th id="heading-id" width="20%">Id</th>
-                    <th id="heading-item" width="30%">Description</th>
+                    <th id="heading-item" width="20%">Description</th>
+                    <th id="heading-size" width="10%">Duration</th>
                     <th id="heading-size" width="50%">Failure</th>
                 </tr>
             </thead>
@@ -193,13 +213,14 @@
             <tfoot>
             	<tr>
                     <td></td>
+                    <td></td>
                     <td><strong>Total</strong></td>
                     <td><strong><xsl:value-of select="count(epic/story/scenario[@testStatus='fail'])"/>/<xsl:value-of select="count(epic/story/scenario[@testStatus='fail']) + count(epic/story/scenario[@testStatus='pass'])"/></strong></td>
                 </tr>
             </tfoot>
         </table>
     </div> 
-    <div id="tab5">
+    <div id="tab6">
     	<br/>
 		<table id="defects">
             <thead>
@@ -221,7 +242,7 @@
             </tfoot>
         </table>
     </div> 
-     <div id="tab6">
+     <div id="tab7">
     	<br/>
 		<table id="problems">
             <thead>
@@ -506,6 +527,81 @@
                                                            'children': [],
                                                          },
    </xsl:template>
+   <xsl:template match="epic" mode="map_timing">
+                    <xsl:variable name="num_passing_epic"><xsl:value-of select="count(story/scenario[@testStatus='pass'])"/></xsl:variable>
+                    <xsl:variable name="num_fail_epic"><xsl:value-of select="count(story/scenario[@testStatus='fail'])"/></xsl:variable>
+                    <xsl:variable name="total_running_scenarios_epic"><xsl:value-of select="count(story/scenario[@testStatus='pass'])+count(story/scenario[@testStatus='fail'])"/></xsl:variable>
+       				<xsl:if test="$total_running_scenarios_epic>0">
+                        {   
+                           'id':    'epic-timing-<xsl:value-of select="@id"/>',
+                           'name':  '<xsl:value-of select="@title"/>',
+                           'data': {
+                                       '$area': (<xsl:value-of select="sum(child::story/scenario/@duration) + 0.0001 "/> * 1000 ),
+                                                      '$color': <xsl:choose>
+                                                                    <xsl:when test="$num_fail_epic>0">
+                                                                        'red'
+                                                                    </xsl:when>
+                                                                    <xsl:otherwise>
+                                                                        'green'
+                                                                    </xsl:otherwise>
+                                                                </xsl:choose>
+                                   },
+                           'children': [
+                                           <xsl:apply-templates select="story" mode="map_timing"/>
+                                       ]
+                        },
+                  </xsl:if>
+   </xsl:template>
+   
+  <xsl:template match="story" mode="map_timing">
+                                        <xsl:variable name="num_passing"><xsl:value-of select="count(scenario[@testStatus='pass'])"/></xsl:variable>
+                                        <xsl:variable name="num_fail"><xsl:value-of select="count(scenario[@testStatus='fail'])"/></xsl:variable>
+                                        <xsl:variable name="total_running_scenarios"><xsl:value-of select="count(scenario[@testStatus='pass'])+count(scenario[@testStatus='fail'])"/></xsl:variable>
+                                      	<xsl:if test="$total_running_scenarios>0">
+                                       {
+                                           'id': 'story-timing-<xsl:value-of select="@id"/>',
+                                           'name': '<xsl:value-of select="@id"/>',
+                                           'data': {
+                                                     'title': '<xsl:value-of select="@title"/>',
+                                                     '$area': <xsl:value-of select="sum(child::scenario/@duration)+0.0001"/> * 1000,
+                                                     '$color': <xsl:choose>
+                                                                    <xsl:when test="$num_fail>0">
+                                                                        'red'
+                                                                    </xsl:when>
+                                                                    <xsl:otherwise>
+                                                                    	'green'
+                                                                    </xsl:otherwise>                                                                
+                                                                </xsl:choose>
+                                                   },
+                                           'children': [
+                                                           <xsl:apply-templates select="scenario[@testStatus='pass']" mode="map_timing"/>
+                                                           <xsl:apply-templates select="scenario[@testStatus='fail']" mode="map_timing"/>
+                                                       ]
+                                        },
+                                        </xsl:if>
+   </xsl:template>
+  
+   <xsl:template match="scenario" mode="map_timing">
+                                                         {
+                                                           'id':   'timing-<xsl:choose><xsl:when test="@testStatus='pass'">pass</xsl:when><xsl:when test="@testStatus='fail'">fail</xsl:when></xsl:choose><xsl:value-of select="../@id"/>-<xsl:value-of select="position()" />',
+                                                           'name': '',
+                                                           'data': {
+                                                                     'title': '<xsl:value-of select="@name"/>',
+                                                                     '$color': 
+                                                                               <xsl:choose>
+                                                                                   <xsl:when test="@testStatus='pass'">
+                                                                                       'green'
+                                                                                   </xsl:when>
+                                                                                   <xsl:otherwise>
+                                                                                       'red'
+                                                                                   </xsl:otherwise>
+                                                                               </xsl:choose>,
+                                                                     '$area': (<xsl:value-of select="@duration"/> + 0.0001)* 1000,
+                                                       		         '$text': '<h2><xsl:value-of select="@name"/> - <xsl:value-of select="@duration"/>s</h2><xsl:for-each select="given"><xsl:sort select="position()" data-type="number" order="ascending"/><p>Given <xsl:value-of select="."/> - <xsl:value-of select="@duration"/>s</p></xsl:for-each><xsl:for-each select="when"><xsl:sort select="position()" data-type="number" order="ascending"/><p>When <xsl:value-of select="."/> - <xsl:value-of select="@duration"/>s</p></xsl:for-each><xsl:for-each select="then"><xsl:sort select="position()" data-type="number" order="ascending"/><p>Then <xsl:value-of select="."/> - <xsl:value-of select="@duration"/>s</p></xsl:for-each><xsl:for-each select="failure"><br/>	<p><strong>Failed at step <xsl:value-of select="@step"/></strong></p></xsl:for-each>',
+                                                                   },
+                                                           'children': [],
+                                                         },
+   </xsl:template>
    
    <xsl:template match="epic" mode="detail">
          <tr>
@@ -585,6 +681,7 @@
 	         	<xsl:attribute name="id">node-story-failure-<xsl:value-of select="@id" /></xsl:attribute>
 	         	<td><xsl:value-of select="@id" /></td>
 	         	<td><xsl:value-of select="@title" /></td>
+	         	<td></td>
 	         	<td><strong><xsl:value-of select="count(scenario[@testStatus='fail'])"/>/<xsl:value-of select="count(scenario[@testStatus='fail'])+count(scenario[@testStatus='pass'])"/></strong></td>
 	         </tr>
 	         <xsl:apply-templates select="scenario" mode="failures"/>
@@ -599,17 +696,18 @@
 	         	<td>
 		         	<xsl:for-each select="given">
 		         		<xsl:sort select="position()" data-type="number" order="ascending"/>
-		         		<p>Given, <xsl:value-of select="."/></p>
+		         		<p>Given, <xsl:value-of select="."/> - <xsl:value-of select="@duration"/>s</p>
 		         	</xsl:for-each>
 		         	<xsl:for-each select="when">
 		         		<xsl:sort select="position()" data-type="number" order="ascending"/>
-		         		<p>When, <xsl:value-of select="."/></p>
+		         		<p>When, <xsl:value-of select="."/> - <xsl:value-of select="@duration"/>s</p>
 		         	</xsl:for-each>
 		         	<xsl:for-each select="then">
 		         		<xsl:sort select="position()" data-type="number" order="ascending"/>
-		         		<p>Then, <xsl:value-of select="."/></p>
+		         		<p>Then, <xsl:value-of select="."/> - <xsl:value-of select="@duration"/>s</p>
 		         	</xsl:for-each>
 	         	</td>
+	         	<td><xsl:value-of select="@duration" />s</td>
 	         	<td>
 	         		<xsl:for-each select="failure">
 		         		<p><strong>Failed at step: <xsl:value-of select="@step"/></strong></p>

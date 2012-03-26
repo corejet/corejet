@@ -3,9 +3,12 @@ package org.corejet.testrunner;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import org.corejet.annotations.Given;
+import org.apache.commons.lang.time.StopWatch;
 import org.corejet.annotations.CopyFromParent;
+import org.corejet.annotations.Given;
 import org.corejet.annotations.Then;
 import org.corejet.annotations.When;
 import org.corejet.model.Failure;
@@ -214,7 +217,7 @@ public class CoreJetFrameworkMethod extends FrameworkMethod {
 		/*
 		 * TODO: Implementation is a bit repetitive and should be tidied up.
 		 */
-		for (String givenMethodName : scenario.getGivens()) {
+		for (String givenMethodName : scenario.getGivens().keySet()) {
 			InvokableObjectMethod invokable = findGivenMethodByStepName(givenMethodName, instance);
 			if (invokable == null) {
 				invokable = findGivenMethodByStepName(givenMethodName, parentInstance);
@@ -230,7 +233,7 @@ public class CoreJetFrameworkMethod extends FrameworkMethod {
 			invokeStepMethod(invokable, givenMethodName, instance, parentInstance);
 		}
 
-		for (String whenMethodName : scenario.getWhens()) {
+		for (String whenMethodName : scenario.getWhens().keySet()) {
 			InvokableObjectMethod invokable = findWhenMethodByStepName(whenMethodName, instance);
 			if (invokable == null) {
 				invokable = findWhenMethodByStepName(whenMethodName, parentInstance);
@@ -246,7 +249,7 @@ public class CoreJetFrameworkMethod extends FrameworkMethod {
 			invokeStepMethod(invokable, whenMethodName, instance, parentInstance);
 		}
 
-		for (String thenMethodName : scenario.getThens()) {
+		for (String thenMethodName : scenario.getThens().keySet()) {
 			InvokableObjectMethod invokable = findThenMethodByStepName(thenMethodName, instance);
 			if (invokable == null) {
 				invokable = findThenMethodByStepName(thenMethodName, parentInstance);
@@ -286,12 +289,31 @@ public class CoreJetFrameworkMethod extends FrameworkMethod {
 		}
 
 		try {
+			// time and record each step
+			StopWatch watch = new StopWatch();
+			watch.start();
 			invokable.invoke(args);
+			watch.stop();
+			if (!setTime(stepName, scenario.getGivens(), watch)){
+				if (!setTime(stepName, scenario.getWhens(), watch)){
+					setTime(stepName, scenario.getThens(), watch);
+				}
+			}
 		} catch (Exception e) {
 			scenario.setFailure(new Failure(stepName, e));
 			testProgressLogger.error("Failed at step: "+stepName);
 			throw new FailedMethodError(e);
 		}
+	}
+
+	private boolean setTime(String stepName, Map<String, Double> steps, StopWatch watch) {
+		for (Entry<String, Double> then : steps.entrySet()){
+			if (then.getKey().equals(stepName)){
+				then.setValue(Double.parseDouble(Long.toString(watch.getTime()))/1000);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

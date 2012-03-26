@@ -14,10 +14,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.corejet.AlphanumComparator;
 import org.corejet.model.exception.MergeException;
 import org.corejet.model.exception.ParsingException;
+import org.jdom.DataConversionException;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -30,6 +32,7 @@ import org.jdom.output.XMLOutputter;
  */
 public class RequirementsCatalogue implements Cloneable{
 
+	private static final String DURATION = "duration";
 	private Date extractTime;
 	private Date testTime;
 	private String project;
@@ -138,7 +141,7 @@ public class RequirementsCatalogue implements Cloneable{
 
 					Scenario scenario = new Scenario();
 					scenario.setName(scenarioElement.getAttributeValue("name"));
-					
+
 					scenario.setDefect(scenarioElement.getAttributeValue("defect"));
 
 					String scenarioStatus = scenarioElement.getAttributeValue("testStatus");
@@ -147,17 +150,41 @@ public class RequirementsCatalogue implements Cloneable{
 					}
 
 					for (Element givenElement : (List<Element>) scenarioElement.getChildren("given")) {
-						scenario.addGiven(givenElement.getText());
+						if (null!=givenElement.getAttribute(DURATION)){
+							try {
+								scenario.addGiven(givenElement.getText(),givenElement.getAttribute(DURATION).getDoubleValue());
+							} catch (DataConversionException e){
+								scenario.addGiven(givenElement.getText());
+							}
+						} else {
+							scenario.addGiven(givenElement.getText());
+						}
 					}
 					for (Element whenElement : (List<Element>) scenarioElement.getChildren("when")) {
-						scenario.addWhen(whenElement.getText());
+						if (null!=whenElement.getAttribute(DURATION)){
+							try {
+								scenario.addWhen(whenElement.getText(),whenElement.getAttribute(DURATION).getDoubleValue());
+							} catch (DataConversionException e){
+								scenario.addWhen(whenElement.getText());
+							}
+						} else {
+							scenario.addWhen(whenElement.getText());
+						}
 					}
 					for (Element thenElement : (List<Element>) scenarioElement.getChildren("then")) {
-						scenario.addThen(thenElement.getText());
+						if (null!=thenElement.getAttribute(DURATION)){
+							try {
+								scenario.addThen(thenElement.getText(),thenElement.getAttribute(DURATION).getDoubleValue());
+							} catch (DataConversionException e){
+								scenario.addThen(thenElement.getText());
+							}
+						} else {
+							scenario.addThen(thenElement.getText());
+						}
 					}
-					
+
 					Element failureElement = scenarioElement.getChild("failure");
-					
+
 					if (null!=failureElement){
 						List<String> lines = new ArrayList<String>();
 						for (Object line : failureElement.getChildren("line")){
@@ -165,7 +192,7 @@ public class RequirementsCatalogue implements Cloneable{
 						}
 						scenario.setFailure(new Failure(failureElement.getAttributeValue("step"), failureElement.getAttributeValue("cause"), lines));						
 					}
-									
+
 					scenario.setParentStory(story);
 					scenarios.add(scenario);
 				}
@@ -250,7 +277,8 @@ public class RequirementsCatalogue implements Cloneable{
 								for(Scenario scenario : sortScenarios(story.getScenarios())) {
 									Element scenarioElement = new Element("scenario");
 									scenarioElement.setAttribute("name", scenario.getName());
-									
+									Double runningTime = 0.0;
+
 									if (null!=scenario.getDefect()){
 										scenarioElement.setAttribute("defect", scenario.getDefect());
 									}
@@ -259,18 +287,37 @@ public class RequirementsCatalogue implements Cloneable{
 										scenarioElement.setAttribute("testStatus", scenario.getStatus().getName());
 									}
 
-									for (String given : scenario.getGivens()) {
-										scenarioElement.addContent(new Element("given").addContent(given));
+									for (Entry<String, Double> given : scenario.getGivens().entrySet()) {
+										Element element = new Element("given");
+										element.addContent(given.getKey());
+										if (null!=given.getValue()){
+											runningTime = runningTime + round(given.getValue());
+											element.setAttribute(DURATION, round(given.getValue()).toString());
+										}
+										scenarioElement.addContent(element);
 									}
 
-									for (String when : scenario.getWhens()) {
-										scenarioElement.addContent(new Element("when").addContent(when));
+									for (Entry<String, Double> when : scenario.getWhens().entrySet()) {
+										Element element = new Element("when");
+										element.addContent(when.getKey());
+										if (null!=when.getValue()){
+											runningTime = runningTime + round(when.getValue());
+											element.setAttribute(DURATION, round(when.getValue()).toString());
+										}
+										scenarioElement.addContent(element);
 									}
 
-									for (String then : scenario.getThens()) {
-										scenarioElement.addContent(new Element("then").addContent(then));
+									for (Entry<String, Double> then : scenario.getThens().entrySet()) {
+										Element element = new Element("then");
+										element.addContent(then.getKey());
+										if (null!=then.getValue()){
+											runningTime = runningTime + round(then.getValue());
+											element.setAttribute(DURATION, round(then.getValue()).toString());
+										}
+										scenarioElement.addContent(element);
 									}
 
+									scenarioElement.setAttribute(DURATION,round(runningTime).toString());
 									if (null!=scenario.getFailure()){
 										Failure failure = scenario.getFailure();
 										Element failureElement = new Element("failure");
@@ -314,7 +361,7 @@ public class RequirementsCatalogue implements Cloneable{
 		} else if(null==catB){
 			return catA;
 		}
-		
+
 		if (!catA.getProject().equals(catB.getProject())){
 			throw new MergeException("Provided Catalogues where not for the same project");
 		}
@@ -388,7 +435,7 @@ public class RequirementsCatalogue implements Cloneable{
 		return merged;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private List<Epic> sortEpics(List<Epic> unsorted){
 		Map<String, Epic> epics = new HashMap<String, Epic>();
@@ -404,7 +451,7 @@ public class RequirementsCatalogue implements Cloneable{
 		}
 		return sorted;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private List<Story> sortStories(List<Story> unsorted){
 		Map<String, Story> stories = new HashMap<String, Story>();
@@ -420,7 +467,7 @@ public class RequirementsCatalogue implements Cloneable{
 		}
 		return sorted;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private List<Scenario> sortScenarios(List<Scenario> unsorted){
 		Map<String, Scenario> scenarios = new HashMap<String, Scenario>();
@@ -451,6 +498,10 @@ public class RequirementsCatalogue implements Cloneable{
 		}
 	}
 	
+	private Double round(Double d){
+		return Double.parseDouble(Long.toString(Math.round(d*100))) / 100;
+	}
+
 
 }
 

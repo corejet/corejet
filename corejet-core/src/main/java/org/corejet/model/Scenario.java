@@ -1,8 +1,8 @@
 package org.corejet.model;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * Represents a behavioural scenario of a story
@@ -10,9 +10,9 @@ import com.google.common.collect.Lists;
 public class Scenario {
 
 	private String name;
-	private List<String> givens;
-	private List<String> whens;
-	private List<String> thens;
+	private LinkedHashMap<String,Double> givens;
+	private LinkedHashMap<String,Double> whens;
+	private LinkedHashMap<String,Double> thens;
 	private ScenarioStatus status;
 	private Failure failure;
 	private String defect;
@@ -20,9 +20,9 @@ public class Scenario {
 
 	public Scenario() {
 		this.name = null;
-		this.givens = Lists.newArrayList();
-		this.whens = Lists.newArrayList();
-		this.thens = Lists.newArrayList();
+		this.givens = Maps.newLinkedHashMap();
+		this.whens = Maps.newLinkedHashMap();
+		this.thens = Maps.newLinkedHashMap();
 		this.status = null;
 		this.parentStory = null;
 	}
@@ -35,27 +35,27 @@ public class Scenario {
 		this.name = name;
 	}
 
-	public List<String> getGivens() {
+	public LinkedHashMap<String,Double> getGivens() {
 		return givens;
 	}
 
-	public void setGivens(List<String> givens) {
+	public void setGivens(LinkedHashMap<String,Double> givens) {
 		this.givens = givens;
 	}
 
-	public List<String> getWhens() {
+	public LinkedHashMap<String,Double> getWhens() {
 		return whens;
 	}
 
-	public void setWhens(List<String> whens) {
+	public void setWhens(LinkedHashMap<String,Double> whens) {
 		this.whens = whens;
 	}
 
-	public List<String> getThens() {
+	public LinkedHashMap<String,Double> getThens() {
 		return thens;
 	}
 
-	public void setThens(List<String> thens) {
+	public void setThens(LinkedHashMap<String,Double> thens) {
 		this.thens = thens;
 	}
 
@@ -70,9 +70,9 @@ public class Scenario {
 		}
 	}
 
-	private boolean isNullOrEmpty(List<String> list){
-		if (null!=list){
-			return list.size()==0;
+	private boolean isNullOrEmpty(LinkedHashMap<String,Double> map){
+		if (null!=map){
+			return map.size()==0;
 		} else {
 			return true;
 		}
@@ -91,15 +91,27 @@ public class Scenario {
 	}
 
 	public void addGiven(String text) {
-		this.givens.add(text);
+		addGiven(text,0.0);
 	}
 
 	public void addWhen(String text) {
-		this.whens.add(text);
+		addWhen(text,0.0);
 	}
 
 	public void addThen(String text) {
-		this.thens.add(text);
+		addThen(text,0.0);
+	}
+	
+	public void addGiven(String text, Double duration) {
+		this.givens.put(text,duration);
+	}
+
+	public void addWhen(String text, Double duration) {
+		this.whens.put(text,duration);
+	}
+
+	public void addThen(String text, Double duration) {
+		this.thens.put(text,duration);
 	}
 
 	public Failure getFailure() {

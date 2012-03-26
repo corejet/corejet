@@ -25,7 +25,7 @@ public class SimpleBddTest {
 	public static class ScenarioBlah {
 		
 		@Given("given")
-		public void myFirstGiven() {
+		public void myFirstGiven() throws InterruptedException {
 			System.out.println("First Given hit");
 		}
 		

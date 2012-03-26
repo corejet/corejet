@@ -166,11 +166,11 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 					extra.setStatus(ScenarioStatus.SUPERFLUOUS);
 					for (Method m : c.getMethods()){
 						if (null!=m.getAnnotation(Given.class)){
-							extra.getGivens().add(m.getAnnotation(Given.class).value());
+							extra.getGivens().put(m.getAnnotation(Given.class).value(),0.0);
 						} else if (null!=m.getAnnotation(When.class)){
-							extra.getWhens().add(m.getAnnotation(When.class).value());
+							extra.getWhens().put(m.getAnnotation(When.class).value(),0.0);
 						} else if (null!=m.getAnnotation(Then.class)){
-							extra.getThens().add(m.getAnnotation(Then.class).value());
+							extra.getThens().put(m.getAnnotation(Then.class).value(),0.0);
 						}
 					}
 					story.getScenarios().add(extra );

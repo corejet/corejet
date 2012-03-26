@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>corejet</artifactId>
 		<groupId>org.corejet</groupId>
-		<version>0.12-SNAPSHOT</version>
+		<version>0.12</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -29,8 +29,13 @@
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.2</version>
+		</dependency>
 	</dependencies>
-	<build>
+	<!-- build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -40,7 +45,7 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.kohsuke</groupId>
 				<artifactId>maven-junit-plugin</artifactId>
@@ -60,8 +65,8 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build>
-	
+	</build -->
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>jenkins</id>

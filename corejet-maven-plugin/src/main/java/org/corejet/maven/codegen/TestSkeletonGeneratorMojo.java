@@ -133,19 +133,19 @@ public class TestSkeletonGeneratorMojo extends AbstractMojo {
 		}
 		annotateClass(scenarioStaticInnerClass, org.corejet.annotations.Scenario.class, scenario.getName());
 		
-		for (String given : scenario.getGivens()) {
+		for (String given : scenario.getGivens().keySet()) {
 			String cleanGivenName = cleanNameFor(given);
 			JMethod method = scenarioStaticInnerClass.method(JMod.PUBLIC, void.class, cleanGivenName);
 			annotateMethod(method, Given.class, given);
 		}
 		
-		for (String when : scenario.getWhens()) {
+		for (String when : scenario.getWhens().keySet()) {
 			String cleanGivenName = cleanNameFor(when);
 			JMethod method = scenarioStaticInnerClass.method(JMod.PUBLIC, void.class, cleanGivenName);
 			annotateMethod(method, When.class, when);
 		}
 		
-		for (String then : scenario.getThens()) {
+		for (String then : scenario.getThens().keySet()) {
 			String cleanGivenName = cleanNameFor(then);
 			JMethod method = scenarioStaticInnerClass.method(JMod.PUBLIC, void.class, cleanGivenName);
 			annotateMethod(method, Then.class, then);
