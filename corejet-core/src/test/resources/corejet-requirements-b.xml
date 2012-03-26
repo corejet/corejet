@@ -3,241 +3,241 @@
 	<epic id="epic-id" title="Epic Id">
 		<story id="CJ-50" title="CJ 50" points="5">
 			<scenario name="1" testStatus="fail">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="2" testStatus="pass">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="3" testStatus="pass">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="4" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="5" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="6" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="7" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="8" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="9" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
-				<then>then</then>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 		</story>
 		<story id="CJ-51" title="CJ 51" points="8">
 			<scenario name="1" testStatus="pass">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="2" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="3" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="4" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="5" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="6" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="7" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="8a" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="8b" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="9" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="10" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="11" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="12" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="13" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="14" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="15" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="16" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="17" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="18" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="19" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="20" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="21" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<when>when</when>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="22" testStatus="todo">
-				<given>given</given>
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="23" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="24" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="25" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 			<scenario name="26" testStatus="todo">
-				<given>given</given>
-				<when>when</when>
-				<then>then</then>
+				<given duration="1.0">given</given>
+				<when duration="2.0">when</when>
+				<then duration="3.0">then</then>
 			</scenario>
 		</story>
 	</epic>

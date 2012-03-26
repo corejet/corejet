@@ -415,6 +415,9 @@ public class RequirementsCatalogue implements Cloneable{
 									if (null==additionScenario.getStatus()){
 										mergedScenario.setStatus(ScenarioStatus.TODO);
 									} else {
+										mergedScenario.setGivens(additionScenario.getGivens());
+										mergedScenario.setWhens(additionScenario.getWhens());
+										mergedScenario.setThens(additionScenario.getThens());
 										mergedScenario.setStatus(additionScenario.getStatus());
 										mergedScenario.setFailure(additionScenario.getFailure());
 									}
