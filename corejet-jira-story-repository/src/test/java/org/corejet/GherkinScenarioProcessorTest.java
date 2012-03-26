@@ -3,6 +3,7 @@ package org.corejet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.corejet.model.Scenario;
@@ -55,9 +56,9 @@ public class GherkinScenarioProcessorTest {
 		assertEquals("Simple Scenario", scenario.getName());
 
 		assertTrue(scenario.getGivens().size() == 1);
-		assertEquals("I have a simple scenario text", scenario.getGivens().get(0));
-		assertEquals("I parse it using Gherkin", scenario.getWhens().get(0));
-		assertEquals("I get a scenario in Corejet object format", scenario.getThens().get(0));
+		assertEquals("I have a simple scenario text", scenario.getGivens().keySet().iterator().next());
+		assertEquals("I parse it using Gherkin", scenario.getWhens().keySet().iterator().next());
+		assertEquals("I get a scenario in Corejet object format", scenario.getThens().keySet().iterator().next());
 	}
 	
 	@Test
@@ -73,9 +74,9 @@ public class GherkinScenarioProcessorTest {
 		assertEquals("Simple Scenario", scenario.getName());
 
 		assertTrue(scenario.getGivens().size() == 1);
-		assertEquals("I have a simple scenario text", scenario.getGivens().get(0));
-		assertEquals("I parse it using Gherkin", scenario.getWhens().get(0));
-		assertEquals("I get a scenario in Corejet object format", scenario.getThens().get(0));
+		assertEquals("I have a simple scenario text", scenario.getGivens().keySet().iterator().next());
+		assertEquals("I parse it using Gherkin", scenario.getWhens().keySet().iterator().next());
+		assertEquals("I get a scenario in Corejet object format", scenario.getThens().keySet().iterator().next());
 	}
 	
 	@Test
@@ -90,8 +91,9 @@ public class GherkinScenarioProcessorTest {
 
 		assertTrue(scenario.getGivens().size() == 2);
 		assertTrue(scenario.getThens().size() == 3);
-		assertEquals("I get a scenario in Corejet object format", scenario.getThens().get(0));
-		assertEquals("there is more than one Given", scenario.getThens().get(1));
+		Iterator<String> iterator = scenario.getThens().keySet().iterator();
+		assertEquals("I get a scenario in Corejet object format", iterator.next());
+		assertEquals("there is more than one Given", iterator.next());
 	}
 	
 	@Test
@@ -102,6 +104,6 @@ public class GherkinScenarioProcessorTest {
 		
 		List<Scenario> scenarios = storyToPopulate.getScenarios();
 		Scenario scenario = scenarios.get(0);
-		assertEquals("I have a simple scenario text", scenario.getGivens().get(0));
+		assertEquals("I have a simple scenario text", scenario.getGivens().keySet().iterator().next());
 	}
 }

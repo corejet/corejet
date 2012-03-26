@@ -38,7 +38,7 @@ $(document)
 					var tm = new $jit.TM.Squarified(
 							{
 								// where to inject the visualization
-								injectInto : 'infovis',
+								injectInto : 'infovis_running',
 								// parent box title heights
 								titleHeight : 30,
 								// enable animations
@@ -112,7 +112,7 @@ $(document)
 											};
 										} else {	if (!node.anySubnode()){
 
-												var fontColor = white;
+												var fontColor = 'white';
 												if (node.getData('color') == fontColor){
 													fontColor = 'black';
 												};
@@ -123,7 +123,7 @@ $(document)
 									}
 								}
 							});
-					tm.loadJSON(json);
+					tm.loadJSON(json_running);
 					tm.refresh();
 
 				});

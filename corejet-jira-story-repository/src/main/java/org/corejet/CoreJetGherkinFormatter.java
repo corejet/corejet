@@ -1,6 +1,7 @@
 package org.corejet;
 
 import java.util.List;
+import java.util.Map;
 
 import org.corejet.model.Story;
 
@@ -16,7 +17,7 @@ public class CoreJetGherkinFormatter implements Formatter {
 
 	private final Story story;
 	private org.corejet.model.Scenario currentScenario;
-	private List<String> lastModifiedStepList;
+	private Map<String,Double> lastModifiedStepMap;
 
 	public CoreJetGherkinFormatter(Story story) {
 		this.story = story;
@@ -54,22 +55,22 @@ public class CoreJetGherkinFormatter implements Formatter {
 		String keyword = step.getKeyword().trim().toLowerCase();
 		
 		if ("given".equals(keyword)) {
-			currentScenario.getGivens().add(step.getName());
-			lastModifiedStepList = currentScenario.getGivens();
+			currentScenario.getGivens().put(step.getName(),0.0);
+			lastModifiedStepMap = currentScenario.getGivens();
 		}
 		
 		if ("when".equals(keyword)) {
-			currentScenario.getWhens().add(step.getName());
-			lastModifiedStepList = currentScenario.getWhens();
+			currentScenario.getWhens().put(step.getName(),0.0);
+			lastModifiedStepMap = currentScenario.getWhens();
 		}
 		
 		if ("then".equals(keyword)) {
-			currentScenario.getThens().add(step.getName());
-			lastModifiedStepList = currentScenario.getThens();
+			currentScenario.getThens().put(step.getName(),0.0);
+			lastModifiedStepMap = currentScenario.getThens();
 		}
 		
 		if ("and".equals(keyword)) {
-			lastModifiedStepList.add(step.getName());
+			lastModifiedStepMap.put(step.getName(),0.0);
 		}
 	}
 

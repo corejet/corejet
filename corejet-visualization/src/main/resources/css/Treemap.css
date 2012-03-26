@@ -16,6 +16,10 @@
   height: 600px;
 }
 
+#infovis_timing {
+  width:1200px;
+  height: 600px;
+}
 
 .node {
   color:#fff;
