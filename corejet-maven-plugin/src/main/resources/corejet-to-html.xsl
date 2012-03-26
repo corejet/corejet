@@ -668,6 +668,7 @@
 	         	<xsl:attribute name="id">node-epic-failure-<xsl:value-of select="position()" /></xsl:attribute>
 	         	<td><xsl:value-of select="@id" /></td>
 	         	<td><xsl:value-of select="@title" /></td>
+	         	<td></td>
 	         	<td><strong><xsl:value-of select="count(story/scenario[@testStatus='fail'])"/>/<xsl:value-of select="count(story/scenario[@testStatus='fail']) + count(story/scenario[@testStatus='pass'])"/></strong></td>    	
 	         </tr>
 	         <xsl:apply-templates select="story" mode="failures"/>
