@@ -415,9 +415,24 @@ public class RequirementsCatalogue implements Cloneable{
 									if (null==additionScenario.getStatus()){
 										mergedScenario.setStatus(ScenarioStatus.TODO);
 									} else {
-										mergedScenario.setGivens(additionScenario.getGivens());
-										mergedScenario.setWhens(additionScenario.getWhens());
-										mergedScenario.setThens(additionScenario.getThens());
+										// decide which scenario timings to use based on total time
+										// i.e. if the total time of the addition > 0 use it
+										Double additionTime = 0.0;
+										for (Double time : additionScenario.getGivens().values()){
+											additionTime +=time;
+										}
+										for (Double time : additionScenario.getWhens().values()){
+											additionTime +=time;
+										}
+										for (Double time : additionScenario.getThens().values()){
+											additionTime +=time;
+										}
+
+										if (additionTime>0){
+											mergedScenario.setGivens(additionScenario.getGivens());
+											mergedScenario.setWhens(additionScenario.getWhens());
+											mergedScenario.setThens(additionScenario.getThens());
+										}
 										mergedScenario.setStatus(additionScenario.getStatus());
 										mergedScenario.setFailure(additionScenario.getFailure());
 									}
@@ -500,7 +515,7 @@ public class RequirementsCatalogue implements Cloneable{
 			throw new RuntimeException("Failed to clone RequirementsCatalogue", e);
 		}
 	}
-	
+
 	private Double round(Double d){
 		return Double.parseDouble(Long.toString(Math.round(d*100))) / 100;
 	}

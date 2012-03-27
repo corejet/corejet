@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>corejet</artifactId>
 		<groupId>org.corejet</groupId>
-		<version>0.13</version>
+		<version>0.14</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -75,7 +75,7 @@
 		</testResources>
 	</build>
 	<!-- build> <plugins> <plugin> <groupId>org.corejet</groupId> <artifactId>corejet-maven-plugin</artifactId> 
-		0.13-SNAPSHOTsion>0.13-SNAPSHOT<SNAPSHOTuration> <requirementsDirectory>../examples/basic-jira-example/target/test-output/corejet-requirements.xml</requirementsDirectory> 
+		0.14-SNAPSHOTsion>0.14-SNAPSHOT<SNAPSHOTuration> <requirementsDirectory>../examples/basic-jira-example/target/test-output/corejet-requirements.xml</requirementsDirectory> 
 		</configuration> </plugin> </plugins> </build -->
 	<repositories>
 		<repository>
