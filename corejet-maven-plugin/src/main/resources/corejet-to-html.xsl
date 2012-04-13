@@ -331,6 +331,7 @@
                                        <xsl:variable name="num_defect_epic"><xsl:value-of select="count(story/scenario[@testStatus='defect'])"/></xsl:variable>
                                        <xsl:variable name="num_todo_epic"><xsl:value-of select="count(story/scenario[@testStatus='todo'])"/></xsl:variable>
                                        <xsl:variable name="num_na_epic"><xsl:value-of select="count(story/scenario[@testStatus='na'])"/></xsl:variable>
+                                       <xsl:variable name="num_empty_epic"><xsl:value-of select="count(story/scenario[@testStatus='empty'])"/></xsl:variable>
                                        <xsl:variable name="total_scenarios_epic"><xsl:value-of select="count(story/scenario)"/></xsl:variable>
                                                       '$color': <xsl:choose>
                                                       				<xsl:when test="$total_scenarios_epic=0">
@@ -345,10 +346,10 @@
                                                                     <xsl:when test="$num_mismatch_epic+$num_superfluous_epic>0">
                                                                         'orange'
                                                                     </xsl:when>
-                                                                    <xsl:when test="$num_passing_epic+$num_na_epic=$total_scenarios_epic">
+                                                                    <xsl:when test="$num_passing_epic+$num_na_epic+$num_empty_epic=$total_scenarios_epic">
                                                                         'green'
                                                                     </xsl:when>
-                                                                    <xsl:when test="$num_pending_epic+$num_passing_epic+$num_na_epic=$total_scenarios_epic">
+                                                                    <xsl:when test="$num_pending_epic+$num_passing_epic+$num_empty_epic+$num_na_epic=$total_scenarios_epic">
                                                                         'lightblue'
                                                                     </xsl:when>
                                                                     <xsl:otherwise>

@@ -4,27 +4,15 @@
 package org.corejet.maven.reporting;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.List;
 
-import org.apache.axis.utils.ByteArray;
-import org.apache.axis.utils.IOUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.apache.tools.ant.DirectoryScanner;
 import org.corejet.Configuration;
@@ -34,7 +22,6 @@ import org.corejet.model.Scenario;
 import org.corejet.model.ScenarioStatus;
 import org.corejet.model.Story;
 import org.corejet.model.exception.MergeException;
-import org.corejet.model.exception.ParsingException;
 
 /**
  * Gather together a set of report files to create a trended HTML report
