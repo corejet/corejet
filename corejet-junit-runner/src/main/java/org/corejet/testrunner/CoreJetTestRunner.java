@@ -144,7 +144,7 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 					}
 					
 					// Describe the scenario by using it's first method, this allows for better integration with the JUnit tool in eclipse
-					Description scenarioDescription = Description.createTestDescription(scenarioInnerClass, scenarioInnerClass.getMethods()[0].getName());
+					Description scenarioDescription = Description.createTestDescription(scenarioInnerClass, scenarioInnerClass.getMethods()[0].getName()+" - "+scenario.getName());
 					fixtureDescription.addChild(scenarioDescription);
 
 					standinMethods.put(coreJetFrameworkMethod, scenarioDescription);
