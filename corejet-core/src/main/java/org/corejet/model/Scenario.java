@@ -30,6 +30,10 @@ public class Scenario {
 	public String getName() {
 		return name;
 	}
+	
+	public String getCleanedName() {
+		return name.replaceAll("\\s+", "_");
+	}
 
 	public void setName(String name) {
 		this.name = name;

@@ -142,7 +142,9 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 					} catch (NoSuchMethodException e) {
 						throw new CorejetException("Failed to create corejet framework method", e);
 					}
-					Description scenarioDescription = Description.createTestDescription(scenarioInnerClass, scenario.getName());
+					
+					// Describe the scenario by using it's first method, this allows for better integration with the JUnit tool in eclipse
+					Description scenarioDescription = Description.createTestDescription(scenarioInnerClass, scenarioInnerClass.getMethods()[0].getName());
 					fixtureDescription.addChild(scenarioDescription);
 
 					standinMethods.put(coreJetFrameworkMethod, scenarioDescription);
