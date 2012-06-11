@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.corejet.Configuration;
 import org.corejet.annotations.Defect;
 import org.corejet.annotations.Given;
 import org.corejet.annotations.NotAutomatable;
 import org.corejet.annotations.NotImplementedYet;
 import org.corejet.annotations.Scenario;
+import org.corejet.annotations.Smoke;
 import org.corejet.annotations.Story;
 import org.corejet.annotations.StorySource;
 import org.corejet.annotations.AwaitingFunctionality;
@@ -49,6 +51,7 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 	private static final Logger logger = LoggerFactory.getLogger(CoreJetTestRunner.class);
 
 	private static final String FILTER_REGEX = "corejet.filter";
+	private static final String SMOKE_TESTS = "corejet.smoke";
 
 	/**
 	 * @param testClass
@@ -119,21 +122,30 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 				Class<?> scenarioInnerClass = getScenarioInnerClassFor(scenario, testClass);
 
 				// Don't run the test if annotated @NotImplementedYet, @WaitingForFunctionality, or @Defect		
-
 				String regex = System.getProperty(FILTER_REGEX);
+				String smokeTestsRaw = System.getProperty(SMOKE_TESTS);
+				boolean smokeTests = false;
+				if (null!=smokeTestsRaw && Boolean.TRUE.toString().equals(smokeTestsRaw)){
+					smokeTests = true;
+				}
+
 				if (scenarioInnerClass.isAnnotationPresent(NotImplementedYet.class)){
 					scenario.setStatus(ScenarioStatus.TODO);
 				} else if (scenarioInnerClass.isAnnotationPresent(AwaitingFunctionality.class) )  {
 					scenario.setStatus(ScenarioStatus.PENDING);
 				} else if (scenarioInnerClass.isAnnotationPresent(NotAutomatable.class) )  {
 					scenario.setStatus(ScenarioStatus.NA);
-				}else if (scenarioInnerClass.isAnnotationPresent(Defect.class) )  {
+				} else if (scenarioInnerClass.isAnnotationPresent(Defect.class) )  {
 					scenario.setStatus(ScenarioStatus.DEFECT);
 					scenario.setDefect(scenarioInnerClass.getAnnotation(Defect.class).value());
-				}else if (null!=regex && !scenario.getName().matches(regex)){
+				} else if (null!=regex && !scenario.getName().matches(regex)){
 					// if a regex filter is provided, skip the scenarios that don't match the filter
 					scenario.setStatus(ScenarioStatus.TODO);
-				} else {
+				} else if (smokeTests && !scenarioInnerClass.isAnnotationPresent(Smoke.class)){
+					// if not marked as a smoke test, skip
+					scenario.setStatus(ScenarioStatus.TODO);
+				}else {
+
 					CoreJetFrameworkMethod coreJetFrameworkMethod;
 					try {
 						coreJetFrameworkMethod = new CoreJetFrameworkMethod(scenarioInnerClass, scenario);
@@ -142,7 +154,7 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 					} catch (NoSuchMethodException e) {
 						throw new CorejetException("Failed to create corejet framework method", e);
 					}
-					
+
 					// Describe the scenario by using it's first method, this allows for better integration with the JUnit tool in eclipse
 					Description scenarioDescription = Description.createTestDescription(scenarioInnerClass, scenarioInnerClass.getMethods()[0].getName()+" - "+scenario.getName());
 					fixtureDescription.addChild(scenarioDescription);
