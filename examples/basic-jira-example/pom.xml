@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>examples</artifactId>
 		<groupId>org.corejet.examples</groupId>
-		<version>0.18-SNAPSHOT-SNAPSHOT</version>
+		<version>0.18</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>

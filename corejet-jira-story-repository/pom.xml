@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.corejet</groupId>
 	<artifactId>jira-story-repository</artifactId>
-	<version>0.18-SNAPSHOT-SNAPSHOT</version>
+	<version>0.18</version>
 	<dependencies>
 		<dependency>
 			<groupId>org.corejet</groupId>
 			<artifactId>corejet-core</artifactId>
-			0.18-SNAPSHOTsion>0.18-SNAPSHOT</version>
+			<version>0.18</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
