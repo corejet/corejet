@@ -99,9 +99,12 @@ Key annotations include:
 * @Given, @When, @Then - The steps that make up a scenario
 * @NotImplementedYet - A default annotation used to identify that the implementation of a scenario has not been completed
 * @NotAutomatable - Identifies a scenario that can not be tested using the framework
-* @AwaitingFunctionality - Identifies a scenario that's test has been written but the functionality has nt been delivered yet
+* @AwaitingFunctionality - Identifies a scenario where a test has been written but the functionality has not been delivered yet
 * @Defect - Stops a particular scenario from running due to a known defect
-* @CopyFromParent - Allows developers to share attributes between stories and scenarios
+* @WebDriverPageProvider - (part of corejet-pageobject-support) designates an instance variable within a scenario class as WebDriver that should be used by Corejet when instantiating page objects
+* @CopyFromParent - Allows developers to share instance variables between stories and scenarios. Put this annotation on instance variables in the scenario class, and Corejet will copy (by reference) the instance variable with the same name from the outer Story class. Mainly used in conjunction with @WebDriverPageProvider, to use the same WebDriver object in all scenarios.
+
+See Javadocs and examples for more details.
 
 h2. Get the source
 
