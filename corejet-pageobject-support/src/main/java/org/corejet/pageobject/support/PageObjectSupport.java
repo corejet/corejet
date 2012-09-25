@@ -1,15 +1,21 @@
 package org.corejet.pageobject.support;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.Augmenter;
 
 /**
  * Helper methods to speed up page object development.  Extend this class to create PageObjects
@@ -419,5 +425,26 @@ public class PageObjectSupport implements PageObject {
 		driver.navigate().back();
 	}
 	
+	public String getScreenShot(){
+		return getScreenShot(this.driver);
+	}
+	
+	public static String getScreenShot(WebDriver driver) {
+		File output = new File("target/corejet/screenshots/"+new Date().getTime() + "test.png");
+		File file = output;
+		if (driver instanceof FirefoxDriver){
+			file = ((FirefoxDriver) driver).getScreenshotAs(OutputType.FILE);
+		} else {
+			WebDriver augmentedDriver = new Augmenter().augment(driver);
+			file = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
+		}
+		try {
+			FileUtils.copyFile(file, output);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		return output.toURI().toString();
+
+	}
 
 }

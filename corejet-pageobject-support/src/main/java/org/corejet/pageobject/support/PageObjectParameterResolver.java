@@ -49,7 +49,7 @@ public class PageObjectParameterResolver implements ParameterResolver {
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 */
-	private WebDriver findDriverOnInstance(Object instance) throws IllegalArgumentException, IllegalAccessException {
+	public static WebDriver findDriverOnInstance(Object instance) throws IllegalArgumentException, IllegalAccessException {
 		for (Field f : instance.getClass().getDeclaredFields()) {
 			if (f.getAnnotation(WebDriverPageProvider.class) != null && WebDriver.class.isAssignableFrom(f.getType())) {
 

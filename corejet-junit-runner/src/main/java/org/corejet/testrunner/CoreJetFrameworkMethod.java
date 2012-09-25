@@ -37,7 +37,7 @@ public class CoreJetFrameworkMethod extends FrameworkMethod {
 	 * An instance of the class annotated @Scenario which this FrameworkMethod
 	 * corresponds to.
 	 */
-	private Object instance;
+	public Object instance;
 
 	/**
 	 * The class of the instance, i.e. the class which has been annotated with
@@ -51,7 +51,7 @@ public class CoreJetFrameworkMethod extends FrameworkMethod {
 	 * The {@link Scenario} data object (populated from a Story source such as
 	 * JIRA) which this FrameworkMethod is based upon.
 	 */
-	private Scenario scenario;
+	protected Scenario scenario;
 
 	/**
 	 * The instance of the parent class of 'instance' (i.e. the outer,
@@ -300,10 +300,14 @@ public class CoreJetFrameworkMethod extends FrameworkMethod {
 				}
 			}
 		} catch (Exception e) {
-			scenario.setFailure(new Failure(stepName, e));
+			storeFailure(stepName, e);
 			testProgressLogger.error("Failed at step: "+stepName);
 			throw new FailedMethodError(e);
 		}
+	}
+
+	protected void storeFailure(String stepName, Exception e) {
+		scenario.setFailure(new Failure(stepName, e));
 	}
 
 	private boolean setTime(String stepName, Map<String, Double> steps, StopWatch watch) {

@@ -713,7 +713,16 @@
 	         	<td>
 	         		<xsl:for-each select="failure">
 		         		<p><strong>Failed at step: <xsl:value-of select="@step"/></strong></p>
-			         	<p><stong>Caused by: </stong></p>
+		         		<xsl:if test="@link">
+			         		<xsl:element name="a">
+							  <xsl:attribute name="href">
+							    <xsl:value-of select="@link"/>
+							  </xsl:attribute>
+							  <xsl:attribute name="target">_blank</xsl:attribute>
+							  More Information
+							</xsl:element>
+						</xsl:if>
+		         		<p><stong>Caused by: </stong></p>
 			         	<p><xsl:value-of select="@cause"/></p>
 			         	<p><strong>Stack Trace: </strong></p>
 		         		<div style="background-color:white; width:100%; overflow:auto;">

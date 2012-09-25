@@ -1,11 +1,12 @@
 package org.corejet.testrunner;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.corejet.Configuration;
+import org.corejet.annotations.AwaitingFunctionality;
 import org.corejet.annotations.Defect;
 import org.corejet.annotations.Given;
 import org.corejet.annotations.NotAutomatable;
@@ -14,7 +15,6 @@ import org.corejet.annotations.Scenario;
 import org.corejet.annotations.Smoke;
 import org.corejet.annotations.Story;
 import org.corejet.annotations.StorySource;
-import org.corejet.annotations.AwaitingFunctionality;
 import org.corejet.annotations.Then;
 import org.corejet.annotations.When;
 import org.corejet.model.RequirementsCatalogue;
@@ -146,14 +146,7 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 					scenario.setStatus(ScenarioStatus.TODO);
 				}else {
 
-					CoreJetFrameworkMethod coreJetFrameworkMethod;
-					try {
-						coreJetFrameworkMethod = new CoreJetFrameworkMethod(scenarioInnerClass, scenario);
-					} catch (SecurityException e) {
-						throw new CorejetException("Failed to create corejet framework method", e);
-					} catch (NoSuchMethodException e) {
-						throw new CorejetException("Failed to create corejet framework method", e);
-					}
+					CoreJetFrameworkMethod coreJetFrameworkMethod = createFrameworkMethod(scenario,scenarioInnerClass);
 
 					// Describe the scenario by using it's first method, this allows for better integration with the JUnit tool in eclipse
 					Description scenarioDescription = Description.createTestDescription(scenarioInnerClass, scenarioInnerClass.getMethods()[0].getName()+" - "+scenario.getName());
@@ -203,6 +196,23 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 		} catch (Exception e) {
 			throw new CorejetException("Failed to create CoreJetXmlWritingRunListener", e);
 		}
+	}
+
+	protected CoreJetFrameworkMethod createFrameworkMethod(org.corejet.model.Scenario scenario, Class<?> scenarioInnerClass) {
+		CoreJetFrameworkMethod coreJetFrameworkMethod;
+		try {
+			for (Field f : scenarioInnerClass.getGenericSuperclass().getClass().getDeclaredFields()) {
+				if (f.getAnnotation(Scenario.class) != null ) {
+
+					f.setAccessible(true);
+					f.setAccessible(false);
+				}
+			}
+			coreJetFrameworkMethod = new CoreJetFrameworkMethod(scenarioInnerClass, scenario);
+		} catch (Exception e) {
+			throw new CorejetException("Failed to create corejet framework method", e);
+		}
+		return coreJetFrameworkMethod;
 	}
 
 	/**

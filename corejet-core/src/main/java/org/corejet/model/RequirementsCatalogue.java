@@ -190,7 +190,7 @@ public class RequirementsCatalogue implements Cloneable{
 						for (Object line : failureElement.getChildren("line")){
 							lines.add(((Element)line).getText());
 						}
-						scenario.setFailure(new Failure(failureElement.getAttributeValue("step"), failureElement.getAttributeValue("cause"), lines));						
+						scenario.setFailure(new Failure(failureElement.getAttributeValue("step"), failureElement.getAttributeValue("cause"), lines,failureElement.getAttributeValue("link")));						
 					}
 
 					scenario.setParentStory(story);
@@ -323,6 +323,9 @@ public class RequirementsCatalogue implements Cloneable{
 										Element failureElement = new Element("failure");
 										failureElement.setAttribute("step",failure.getFailedStep());
 										failureElement.setAttribute("cause",failure.getCause());
+										if(null!=failure.getLink()){
+											failureElement.setAttribute("link",failure.getLink());
+										}
 										for (String line : failure.getStackTrace()){
 											failureElement.addContent(new Element("line").addContent(line));
 										}
