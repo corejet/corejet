@@ -26,9 +26,9 @@
 		
 		<!-- From gherkin repository -->
 		<dependency>
-			<groupId>gherkin</groupId>
+			<groupId>info.cukes</groupId>
 			<artifactId>gherkin</artifactId>
-			<version>2.3.6</version>
+			<version>2.11.5</version>
 		</dependency>
 	</dependencies>
 
