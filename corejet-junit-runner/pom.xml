@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>corejet</artifactId>
 		<groupId>org.corejet</groupId>
-		<version>0.19</version>
+		<version>0.20</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -35,42 +35,5 @@
 			<version>2.2</version>
 		</dependency>
 	</dependencies>
-	<!-- build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.9</version>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
 
-			<plugin>
-				<groupId>org.kohsuke</groupId>
-				<artifactId>maven-junit-plugin</artifactId>
-				<version>1.9</version>
-				<configuration>
-					<fork>true</fork>
-					<concurrency>10</concurrency>
-					<quiet>false</quiet>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build -->
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>jenkins</id>
-			<url>http://maven.jenkins-ci.org/content/repositories/releases</url>
-		</pluginRepository>
-	</pluginRepositories>
 </project>
