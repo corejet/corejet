@@ -102,8 +102,8 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 				story.setTitle(issue.getSummary());
 
 				String storyPointsAsString = singleValueCustomFieldForIssue(issue, this.storyPointsFieldId);
-				if (storyPointsAsString != null) {
-					story.setPoints(Integer.valueOf(storyPointsAsString));
+				if (storyPointsAsString != null && !storyPointsAsString.trim().equals("")) {
+					story.setPoints(Integer.valueOf(storyPointsAsString.trim()));
 				}
 
 				String epicAsString = "unknown";
