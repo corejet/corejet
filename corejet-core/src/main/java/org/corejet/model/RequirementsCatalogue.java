@@ -127,7 +127,10 @@ public class RequirementsCatalogue implements Cloneable{
 				Story story = new Story();
 				story.setId(storyElement.getAttributeValue("id"));
 				story.setTitle(storyElement.getAttributeValue("title"));
-				story.setPoints(Integer.parseInt(storyElement.getAttributeValue("points")));
+				String points = storyElement.getAttributeValue("points");
+				if (null!=points && !"".equals(points.trim())) {
+					story.setPoints(Integer.parseInt(points));
+				}
 				story.setRequirementStatus(storyElement.getAttributeValue("requirementStatus"));
 				story.setRequirementResolution(storyElement.getAttributeValue("requirementResolution"));
 				story.setPriority(storyElement.getAttributeValue("priority"));
