@@ -1,15 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+	<parent>
+		<artifactId>corejet</artifactId>
+		<groupId>org.corejet</groupId>
+		<version>0.20</version>
+		<relativePath>../</relativePath>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.corejet</groupId>
 	<artifactId>jira-story-repository</artifactId>
-	<version>0.19</version>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.corejet</groupId>
 			<artifactId>corejet-core</artifactId>
-			<version>0.19</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -28,60 +34,9 @@
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>gherkin</artifactId>
-			<version>2.4.16</version>
+			<version>2.11.5</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>atlassian</id>
-			<url>https://maven.atlassian.com/repository/public</url>
-		</repository>
-		<repository>
-			<id>gherkin</id>
-			<url>http://cukes.info/maven/</url>
-		</repository>
-	</repositories>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.3.2</version>
-					<configuration>
-						<source>1.5</source>
-						<target>1.5</target>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -113,15 +68,4 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<distributionManagement>
-		<repository>
-			<id>deloitte-ext-release</id>
-			<url>http://ci1.deloitte.co.uk/artifactory/ext-release-local</url>
-		</repository>
-		<snapshotRepository>
-			<id>deloitte-ext-snapshot</id>
-			<url>http://ci1.deloitte.co.uk/artifactory/ext-snapshot-local</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
 </project>

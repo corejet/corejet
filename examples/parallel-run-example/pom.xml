@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>examples</artifactId>
 		<groupId>org.corejet.examples</groupId>
-		<version>0.19</version>
+		<version>0.20</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -107,10 +107,4 @@
 		</pluginManagement>
 	</build>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>jenkins</id>
-			<url>http://maven.jenkins-ci.org/content/repositories/releases</url>
-		</pluginRepository>
-	</pluginRepositories>
 </project>
