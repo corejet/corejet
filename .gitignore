@@ -3,7 +3,7 @@
 .classpath
 .svn/
 target/
-
+bin/
 **/.classpath
 **/.project
 **/.settings/
