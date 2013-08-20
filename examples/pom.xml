@@ -1,16 +1,49 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<artifactId>corejet</artifactId>
 		<groupId>org.corejet</groupId>
-		<version>0.20</version>
+		<version>0.21-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-  <groupId>org.corejet.examples</groupId>
-  <artifactId>examples</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-  	<module>basic-jira-example</module>
-  	<module>parallel-run-example</module>
-  </modules>
+	<groupId>org.corejet.examples</groupId>
+	<artifactId>examples</artifactId>
+	<packaging>pom</packaging>
+	<url>http://corejet.org</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>https://github.com/corejet/corejet</url>
+		<connection>scm:git:https://github.com/corejet/corejet.git</connection>
+		<developerConnection>scm:git:https://github.com/corejet/corejet.git</developerConnection>
+	</scm>
+	<developers>
+		<developer>
+			<id>rpickard</id>
+			<name>Raleigh Pickard</name>
+		</developer>
+		<developer>
+			<id>rnorth</id>
+			<name>Richard North</name>
+		</developer>
+		<developer>
+			<id>mahsubramanian</id>
+			<name>Mahesh Subramanian</name>
+		</developer>
+		<developer>
+			<id>michaeljansbro</id>
+			<name>Mike Ansbro</name>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>basic-jira-example</module>
+		<module>parallel-run-example</module>
+	</modules>
 </project>
