@@ -25,12 +25,16 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a requirements catalogue containing
  * epics, stories and scenarios.
  */
 public class RequirementsCatalogue implements Cloneable{
+	
+	private static final Logger logger = LoggerFactory.getLogger(RequirementsCatalogue.class);
 
 	private static final String DURATION = "duration";
 	private Date extractTime;
@@ -125,11 +129,14 @@ public class RequirementsCatalogue implements Cloneable{
 			for(Element storyElement : (List<Element>) epicElement.getChildren("story")) {
 
 				Story story = new Story();
-				story.setId(storyElement.getAttributeValue("id"));
+				String storyId = storyElement.getAttributeValue("id");
+				story.setId(storyId);
 				story.setTitle(storyElement.getAttributeValue("title"));
 				String points = storyElement.getAttributeValue("points");
 				if (null!=points && !"".equals(points.trim())) {
 					story.setPoints(Integer.parseInt(points));
+				} else {
+					logger.debug("Story with ID:{} has not been estimated.", storyId);
 				}
 				story.setRequirementStatus(storyElement.getAttributeValue("requirementStatus"));
 				story.setRequirementResolution(storyElement.getAttributeValue("requirementResolution"));

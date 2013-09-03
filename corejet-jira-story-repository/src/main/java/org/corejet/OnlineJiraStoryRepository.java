@@ -104,6 +104,8 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 				String storyPointsAsString = singleValueCustomFieldForIssue(issue, this.storyPointsFieldId);
 				if (storyPointsAsString != null && !storyPointsAsString.trim().equals("")) {
 					story.setPoints(Integer.valueOf(storyPointsAsString.trim()));
+				} else {
+					logger.debug("Story with ID:{} has not been estimated", issue.getKey());
 				}
 
 				String epicAsString = "unknown";
