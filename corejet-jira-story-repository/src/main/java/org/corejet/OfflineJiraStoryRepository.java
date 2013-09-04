@@ -11,27 +11,61 @@ import org.corejet.model.Story;
 import org.corejet.model.exception.ParsingException;
 import org.corejet.repository.StoryRepository;
 import org.corejet.repository.exception.StoryRepositoryException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
 
 /**
- * Story repository which uses a cached corejet-requirements.xml file to provide
- * offline testing capability.
- * 
+ * Story repository which uses a cached <code>corejet-requirements.xml</code> file to provide
+ * offline testing capability. 
+ * <p>
+ * The default location of the <code>corejet-requirements.xml</code> is 
+ * set to be {@link Configuration#getBaseDirectory()} plus <code>/test-output/corejet-requirements.xml</code> 
+ * i.e. it will never be cached.
+ * </p>
+ * <p>
+ * The location of the <code>corejet-requirements.xml</code> can be specified by the system property
+ * <code>corejet.cached.requirements.file</code>
+ * </p>
  * @author rnorth
- * 
  */
 public class OfflineJiraStoryRepository implements StoryRepository {
 
+	private static final Logger logger = LoggerFactory.getLogger(OfflineJiraStoryRepository.class);
+	private static final String DEFAULT_CACHED_REQUIREMENTS_FILE_LOCATION = Configuration.getBaseDirectory()+"/test-output/corejet-requirements.xml";
+	private static final String CACHED_REQUIREMENTS_FILE_PROPERTY = "corejet.cached.requirements.file";
+	
 	private RequirementsCatalogue requirementsCatalogue;
-	public static File corejetReportInputFile = new File(Configuration.getBaseDirectory()+"/test-output/corejet-requirements.xml");
-
-	public OfflineJiraStoryRepository() throws FileNotFoundException, ParsingException {
-		requirementsCatalogue = new RequirementsCatalogue(new FileInputStream(corejetReportInputFile));
+	
+	/**
+	 * A cached <code>corejet-requirements.xml</code> file containing all stories
+	 */
+	public static File corejetRequirementsInputFile;
+	
+	// Allow users to specify an alternative cached requirements file
+	static {
+		String cachedRequirementsFileLocation = Configuration.getProperty(CACHED_REQUIREMENTS_FILE_PROPERTY);
+		if (null==cachedRequirementsFileLocation || "".equals(cachedRequirementsFileLocation)) {
+			// Fall back to the default location
+			cachedRequirementsFileLocation = DEFAULT_CACHED_REQUIREMENTS_FILE_LOCATION;
+		}
+		logger.debug("Cached requirements file location = {}", cachedRequirementsFileLocation);
+		corejetRequirementsInputFile = new File(cachedRequirementsFileLocation);
 	}
 
 	/**
-	 * @{inheritDoc
+	 * Instantiate the requirements catalogue from the file in the location specified by
+	 * {@link OfflineJiraStoryRepository#corejetRequirementsInputFile}
+	 * @throws FileNotFoundException
+	 * @throws ParsingException
+	 */
+	public OfflineJiraStoryRepository() throws FileNotFoundException, ParsingException {
+		requirementsCatalogue = new RequirementsCatalogue(new FileInputStream(corejetRequirementsInputFile));
+	}
+
+	/**
+	 * @{inheritDoc}
 	 */
 	public Map<String, Story> getAllStories() throws StoryRepositoryException {
 

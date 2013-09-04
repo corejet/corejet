@@ -8,6 +8,11 @@ import hudson.plugins.jira.soap.RemoteException;
 import hudson.plugins.jira.soap.RemoteIssue;
 import hudson.plugins.jira.soap.RemoteVersion;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -21,6 +26,7 @@ import javax.xml.rpc.ServiceException;
 import org.corejet.model.Epic;
 import org.corejet.model.RequirementsCatalogue;
 import org.corejet.model.Story;
+import org.corejet.model.WritingException;
 import org.corejet.repository.StoryRepository;
 import org.corejet.repository.exception.StoryRepositoryException;
 import org.slf4j.Logger;
@@ -79,15 +85,38 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 	}
 
 	/**  
-	 * @{inheritDoc}
+	 * Get all stories and create the {@link OfflineJiraStoryRepository#corejetRequirementsInputFile}
+	 * 
 	 */
 	public Map<String, Story> getAllStories() throws StoryRepositoryException {
 
 		if (!initialized) {
 			initialize();
 		}
-
+		
+		createCorejetRequirementsInputFile();
 		return Collections.unmodifiableMap(stories);
+	}
+
+	/**
+	 * Write the {@link RequirementsCatalogue} to file for use by the {@link OfflineJiraStoryRepository}
+	 */
+	private void createCorejetRequirementsInputFile() {
+		try {
+			File corejetReportInputFile = OfflineJiraStoryRepository.corejetRequirementsInputFile;
+			logger.info("Re-creating cached requirements file at: {}", corejetReportInputFile.getAbsolutePath());
+			File corejetReportRepositoryFile = corejetReportInputFile;
+			OutputStream outputStream;
+			outputStream = new FileOutputStream(corejetReportRepositoryFile);
+			requirementsCatalogue.write(outputStream);
+			outputStream.flush();
+		} catch (FileNotFoundException e) {
+			logger.error("Error writing new requirements file", e);
+		} catch (WritingException e) {
+			logger.error("Error writing new requirements file", e);
+		} catch (IOException e) {
+			logger.error("Error writing new requirements file", e);
+		}
 	}
 
 	private synchronized void initialize() throws StoryRepositoryException {

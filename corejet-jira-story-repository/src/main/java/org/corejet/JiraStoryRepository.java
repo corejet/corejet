@@ -26,9 +26,20 @@ public class JiraStoryRepository implements StoryRepository {
 	private StoryRepository delegate;
 
 	/**
-	 * Instantiation, using the value of system property
-	 * corejet.repository.offline to determine whether working in offline mode
-	 * or not.
+	 * <p>Instantiation. Use the value of system property <code>corejet.repository.offline</code> 
+	 * to determine whether to work in offline mode or not.</p>
+	 * 
+	 * <p>In summary, if a cached requirements file is available, the default behaviour is 
+	 * to go online only if the cached requirements file is more than one hour old.</p>
+	 * 
+	 * <p>If <code>corejet.repository.offline</code> is 'false' (or not set) and the value of
+	 * system property <code>corejet.repository.nevercache</code> is 'true', always go online.</p>
+	 * 
+	 * <p>If <code>corejet.repository.offline</code> is 'false' (or not set) and <code>corejet.repository.nevercache</code> is 'false',
+	 * only go online if the cached repository file is not present or if it is more than one hour old.</p>
+	 * 
+	 * <p>If <code>corejet.repository.offline</code> is 'true' and a cached requirements file exists,
+	 * always work offline, regardless of when the cached requirements file was last updated</p>
 	 * 
 	 * @throws StoryRepositoryException
 	 * @throws FileNotFoundException
@@ -38,21 +49,18 @@ public class JiraStoryRepository implements StoryRepository {
 
 		String offlineMode = System.getProperty("corejet.repository.offline");
 		String neverCache = System.getProperty("corejet.repository.nevercache");
-		File cachedFile = OfflineJiraStoryRepository.corejetReportInputFile;
-		boolean cachedFileStale = !cachedFile.exists() || cachedFile.lastModified() < (System.currentTimeMillis() - 60 * 60 * 1000);
-		
-		
-		if (Boolean.parseBoolean(offlineMode) && cachedFile.exists()) {
-			logger.info("JiraStoryRepository in OFFLINE mode (-Dcorejet.repository.offline=true and recent local cached file at "+cachedFile.getAbsolutePath()+")");
+		File cachedRepositoryFile = OfflineJiraStoryRepository.corejetRequirementsInputFile;
+		boolean cachedFileStale = !cachedRepositoryFile.exists() || cachedRepositoryFile.lastModified() < (System.currentTimeMillis() - 60 * 60 * 1000);
+		if (Boolean.parseBoolean(offlineMode) && cachedRepositoryFile.exists()) {
+			logger.info("JiraStoryRepository in OFFLINE mode (-Dcorejet.repository.offline=true) and recent local cached file exists at "+cachedRepositoryFile.getAbsolutePath()+")");
 			delegate = new OfflineJiraStoryRepository();
 		} else {
 			logger.debug("System property set or absent -Dcorejet.repository.offline=false");
-			
 			if ( Boolean.parseBoolean(neverCache) || cachedFileStale) {
-				logger.debug("Cached file is stale or -Dcorejet.repository.nevercache=true - going ONLINE");
+				logger.info("Cached file is stale or -Dcorejet.repository.nevercache=true - going ONLINE");
 				delegate = new OnlineJiraStoryRepository();
 			} else {
-				logger.debug("Cached file is not stale - staying OFFLINE");
+				logger.info("Cached file is not stale - staying OFFLINE");
 				delegate = new OfflineJiraStoryRepository();
 			}
 		}
