@@ -1,6 +1,6 @@
 h1. Welcome to the CoreJet BDD Framework
 
-CoreJet is a business friendly BDD framework, designed to provide confidence and insight for users and product owners, whilst allowing developers to turn requirements into automated BDD tests with minimal fuss.  The framework focuses on providing requirements traceability and coverage analysis allowing for better visibilty of progress towards business goals. 
+CoreJet is a business friendly BDD framework, designed to provide confidence and insight for users and product owners, whilst allowing developers to turn requirements into automated BDD tests with minimal fuss.  The framework focuses on providing requirements traceability and coverage analysis allowing for better visibility of progress towards business goals. 
 
 Learn more on the "http://corejet.org":http://corejet.org website.
 
@@ -9,6 +9,8 @@ h2. Getting started
 1. Download the CoreJet source and install it in your local maven repository
 
 bc. mvn clean install
+
+or configure maven to download artifacts from the Maven Central Repository
 
 2. Add your chosen test implementation and story repository dependency to your maven project e.g.
 
@@ -74,7 +76,7 @@ bc. <plugin>
   </executions>
 </plugin>
 
-12. Reports are output to the target directory as corejet-repot.html and can be viewed from any HTML5 capable browser
+12. Reports are output to the target directory as corejet-report.html and can be viewed from any HTML5 capable browser
 
 h2. CoreJet Modules
 
@@ -106,11 +108,46 @@ Key annotations include:
 
 See Javadocs and examples for more details.
 
+h2. Online/Offline JIRA configuration
+
+By default CoreJet will re-generate the requirements repository by processing your JIRA issue filter every time tests are run. However, it is possible to configure CoreJet to cache a local version of the repository to allow running of tests offline. This is particularly useful when internet access is not available or the connection is slow.
+
+To enable offline mode, add the following property to your corejet.properties file, specifying a sensible name and location for the generated requirements xml file: 
+
+bc. corejet.cached.requirements.file=src/test/resources/corejet-cached-requirements.xml
+
+By default a corejet-requirements.xml file is generated in the 'target/corejet/test-output' directory, which means the file is not cached.  If the file is not cached, it is not possible to work offline, so choose a location outside of a generated code directory.
+
+This configuration alone causes CoreJet to work in a mixed online/offline mode, which is ideal during a typical development phase. If the cached file exists, and has been modified within the last hour, tests will be run offline, using the cached file to process the requirements.  If the cached file does not exist, or if it does exist but has not been modified within the last hour, the tests will be run in online mode and a new cached -requirements.xml file will be generated to allow for offline working against the latest requirements.
+
+It is possible to work exclusively in online or offline mode.
+
+To work exclusively in offline mode, set the following system property:
+
+bc. corejet.repository.offline=true
+
+To work exclusively in online mode (i.e. force an update of the requirements from JIRA), set the following system property:
+
+bc. corejet.repository.nevercache=true
+
+It is possible to set system properties in the maven-surefire-plugin:
+
+bc. <configuration>
+  <systemPropertyVariables>
+    <corejet.repository.offline>true</corejet.repository.offline>
+    <corejet.repository.nevercache>false</corejet.repository.nevercache>
+  </systemPropertyVariables>
+</configuration>
+
 h2. Get the source
 
 Fork the project source code on "Github":http://github.com/corejet/corejet:
 
 bc. git clone git://github.com/corejet/corejet.git
+
+h2. Get the JARs
+
+CoreJet versions from 0.21 onwards are deployed to the Maven Central Repository.  
 
 
 h2. Licence
