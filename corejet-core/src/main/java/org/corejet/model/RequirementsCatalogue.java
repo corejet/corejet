@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 public class RequirementsCatalogue implements Cloneable{
 	
 	private static final Logger logger = LoggerFactory.getLogger(RequirementsCatalogue.class);
+	private static final int DEFAULT_POINTS = Integer.parseInt(System.getProperty("corejet.defaultpoints", "1"));
 
 	private static final String DURATION = "duration";
 	private Date extractTime;
@@ -135,8 +136,9 @@ public class RequirementsCatalogue implements Cloneable{
 				String points = storyElement.getAttributeValue("points");
 				if (null!=points && !"".equals(points.trim())) {
 					story.setPoints(Integer.parseInt(points));
-				} else {
-					logger.debug("Story with ID:{} has not been estimated.", storyId);
+				} else {				
+					logger.warn("Story with ID:{} has not been estimated, settings points to default value of: {}.", storyId,DEFAULT_POINTS);
+					story.setPoints(DEFAULT_POINTS);
 				}
 				story.setRequirementStatus(storyElement.getAttributeValue("requirementStatus"));
 				story.setRequirementResolution(storyElement.getAttributeValue("requirementResolution"));
