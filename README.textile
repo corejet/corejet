@@ -139,6 +139,16 @@ bc. <configuration>
   </systemPropertyVariables>
 </configuration>
 
+h2. Default Story Points
+
+We have implemented a default value for story points, in order to allow the dashboard to function for teams who have not estimated all of their stories.  
+
+bc. The default value has been set to 1.
+
+This value can be set to any integer by setting:
+
+bc. corejet.defaultpoints=<default-points>
+
 h2. Get the source
 
 Fork the project source code on "Github":http://github.com/corejet/corejet:
