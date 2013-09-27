@@ -55,6 +55,7 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 	private static Map<String, Epic> epics = Maps.newHashMap();
 	private static RequirementsCatalogue requirementsCatalogue;
 
+	private static final int DEFAULT_POINTS = Integer.parseInt(System.getProperty("corejet.defaultpoints", "1"));
 	private static final Logger logger = LoggerFactory.getLogger(OnlineJiraStoryRepository.class);
 
 	public OnlineJiraStoryRepository() throws StoryRepositoryException {
@@ -134,7 +135,8 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 				if (storyPointsAsString != null && !storyPointsAsString.trim().equals("")) {
 					story.setPoints(Integer.valueOf(storyPointsAsString.trim()));
 				} else {
-					logger.debug("Story with ID:{} has not been estimated", issue.getKey());
+					story.setPoints(DEFAULT_POINTS);
+					logger.warn("Story with ID:{} has not been estimated, setting to default value {}", issue.getKey(),DEFAULT_POINTS);
 				}
 
 				String epicAsString = "unknown";

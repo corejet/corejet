@@ -13,6 +13,10 @@ public class CoreJetSeleniumTestRunner extends CoreJetTestRunner{
 	public CoreJetSeleniumTestRunner(Class<?> testClass, StoryRepository storyRepository) throws CorejetException,InitializationError, SurplusScenarioException {
 		super(testClass, storyRepository);
 	}
+	
+	public CoreJetSeleniumTestRunner(Class<?> testClass) throws CorejetException, InitializationError, SurplusScenarioException {
+		   super(testClass);
+	}
 
 	@Override
 	protected CoreJetFrameworkMethod createFrameworkMethod(org.corejet.model.Scenario scenario, Class<?> scenarioInnerClass) {
