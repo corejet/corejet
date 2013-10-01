@@ -103,7 +103,8 @@ Key annotations include:
 * @NotAutomatable - Identifies a scenario that can not be tested using the framework
 * @AwaitingFunctionality - Identifies a scenario where a test has been written but the functionality has not been delivered yet
 * @Defect - Stops a particular scenario from running due to a known defect
-* @WebDriverPageProvider - (part of corejet-pageobject-support) designates an instance variable within a scenario class as WebDriver that should be used by Corejet when instantiating page objects
+* @WebDriverPageProvider - (part of corejet-pageobject-support) designates a WebDriver instance variable within a story class that should be used by Corejet when instantiating page objects
+* @ElementLocatorFactory - (part of corejet-pageobject-support) designates an optional ElementLocatorFactory instance variable within a story class that should be used by Corejet when looking up elements within a page object e.g. an instance of the AjaxElementLocatorFactory
 * @CopyFromParent - Allows developers to share instance variables between stories and scenarios. Put this annotation on instance variables in the scenario class, and Corejet will copy (by reference) the instance variable with the same name from the outer Story class. Mainly used in conjunction with @WebDriverPageProvider, to use the same WebDriver object in all scenarios.
 
 See Javadocs and examples for more details.
@@ -157,7 +158,7 @@ bc. git clone git://github.com/corejet/corejet.git
 
 h2. Get the JARs
 
-CoreJet versions from 0.21 onwards are deployed to the Maven Central Repository.  
+CoreJet versions from 0.21 onwards will be deployed to the Maven Central Repository.  
 
 
 h2. Licence
