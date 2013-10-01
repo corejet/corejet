@@ -9,11 +9,12 @@ import java.lang.annotation.Target;
 import org.corejet.testrunner.parameters.internal.Resolver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.ElementLocatorFactory;
 
 /**
- * Specifies that a field is a {@link WebDriver} suitable for use in
+ * Specifies that a field is a {@link ElementLocatorFactory} suitable for use in
  * constructing page objects via the
- * {@link PageFactory#initElements(WebDriver, Class)} method.
+ * {@link PageFactory#initElements(ElementLocatorFactory, Object)} method.
  * 
  * @author rnorth
  * 

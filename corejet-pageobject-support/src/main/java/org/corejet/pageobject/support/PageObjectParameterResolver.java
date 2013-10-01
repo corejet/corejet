@@ -1,6 +1,7 @@
 package org.corejet.pageobject.support;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 import org.corejet.testrunner.parameters.ParameterResolutionException;
 import org.corejet.testrunner.parameters.ParameterResolver;
@@ -43,9 +44,17 @@ public class PageObjectParameterResolver implements ParameterResolver {
 			Class<?> clazz = paramTypes[i];
 			if (PageObject.class.isAssignableFrom(clazz) && existingArgs[i] == null) {
 				// is a page object, so try and initialize it
-				Object resolvedArg = PageFactory.initElements(driver, clazz);;
+				Object resolvedArg;
 				if (null!=locatorFactory){
-					PageFactory.initElements(locatorFactory, (PageObject)resolvedArg);
+					try {
+						resolvedArg =(PageObject) clazz.getConstructor(WebDriver.class).newInstance(driver);
+					} catch (Exception e) {
+						// Fall back to old method
+						resolvedArg = PageFactory.initElements(driver, clazz);
+					}
+					PageFactory.initElements(locatorFactory,resolvedArg);
+				} else {
+					resolvedArg = PageFactory.initElements(driver, clazz);
 				}
 
 				existingArgs[i] = resolvedArg;
