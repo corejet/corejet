@@ -18,4 +18,9 @@ public class ConfigurationTest {
 		
 		Configuration.getProperty("missing.property");
 	}
+	
+	@Test
+	public void testGetPropertyOrDefault() {
+		assertEquals("defaultValue", Configuration.getPropertyOrDefault("missing.property", "defaultValue"));
+	}
 }
