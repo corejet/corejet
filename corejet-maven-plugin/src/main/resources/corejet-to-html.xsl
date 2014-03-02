@@ -612,12 +612,13 @@
          	<td><xsl:value-of select="@title" /></td>
          	<td><xsl:value-of select="sum(child::story/@points)" /></td>     	
          	<xsl:variable name="num_passing"><xsl:value-of select="count(story/scenario[@testStatus='pass'])"/></xsl:variable>
+         	<xsl:variable name="num_na"><xsl:value-of select="count(story/scenario[@testStatus='na'])"/></xsl:variable>
             <xsl:variable name="num_pending"><xsl:value-of select="count(story/scenario[@testStatus='pending'])"/></xsl:variable>
             <xsl:variable name="num_super"><xsl:value-of select="count(story/scenario[@testStatus='superflous'])"/></xsl:variable>
             <xsl:variable name="num_mismatch"><xsl:value-of select="count(story/scenario[@testStatus='mismatch'])"/></xsl:variable>
             <xsl:variable name="total_scenarios"><xsl:value-of select="count(story/scenario)"/></xsl:variable>
-         	<td><xsl:if test="$num_passing=$total_scenarios">Complete</xsl:if><xsl:if test="$total_scenarios>$num_passing">Incomplete</xsl:if></td>
-         	<td><xsl:number value="($num_passing div $total_scenarios)*100"/>%</td>
+         	<td><xsl:if test="$num_passing=$total_scenarios">Complete</xsl:if><xsl:if test="$total_scenarios>($num_passing + $num_na)">Incomplete</xsl:if></td>
+         	<td><xsl:number value="(($num_passing + $num_na) div $total_scenarios)*100"/>%</td>
          </tr>
          <xsl:apply-templates select="story" mode="detail"/>
    </xsl:template>
@@ -629,10 +630,11 @@
          	<td><xsl:value-of select="@title" /></td>
          	<td><xsl:value-of select="@points" /></td>
          	<xsl:variable name="num_passing"><xsl:value-of select="count(scenario[@testStatus='pass'])"/></xsl:variable>
+         	<xsl:variable name="num_na"><xsl:value-of select="count(scenario[@testStatus='na'])"/></xsl:variable>
             <xsl:variable name="num_pending"><xsl:value-of select="count(scenario[@testStatus='pending'])"/></xsl:variable>
             <xsl:variable name="total_scenarios"><xsl:value-of select="count(scenario)"/></xsl:variable>
-         	<td><xsl:if test="$num_passing=$total_scenarios">Complete</xsl:if><xsl:if test="$total_scenarios>$num_passing">Incomplete</xsl:if></td>
-         	<td><xsl:number value="($num_passing div $total_scenarios)*100"/>%</td>
+         	<td><xsl:if test="$num_passing=$total_scenarios">Complete</xsl:if><xsl:if test="$total_scenarios>($num_passing + $num_na)">Incomplete</xsl:if></td>
+         	<td><xsl:number value="(($num_passing + $num_na) div $total_scenarios)*100"/>%</td>
          </tr>
          <xsl:apply-templates select="scenario" mode="detail"/>
    </xsl:template>
@@ -657,7 +659,7 @@
          	</td>
          	<td></td>
          	<td><xsl:value-of select="@testStatus" /></td>
-         	<td><xsl:if test="@testStatus='pass'">10</xsl:if>0%</td>
+         	<td><xsl:if test="@testStatus='pass' or @testStatus='na'">10</xsl:if>0%</td>
          </tr>
    </xsl:template>  
    
