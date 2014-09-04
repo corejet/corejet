@@ -58,7 +58,11 @@ public class JiraStoryRepository implements StoryRepository {
 			logger.debug("System property set or absent -Dcorejet.repository.offline=false");
 			if ( Boolean.parseBoolean(neverCache) || cachedFileStale) {
 				logger.info("Cached file is stale or -Dcorejet.repository.nevercache=true - going ONLINE");
-				delegate = new OnlineJiraStoryRepository();
+				if (null!=Configuration.getProperty("jira.rest.url")){
+					delegate = new OnlineRestJiraStoryRepository();
+				} else {
+					delegate = new OnlineJiraStoryRepository();
+				}
 			} else {
 				logger.info("Cached file is not stale - staying OFFLINE");
 				delegate = new OfflineJiraStoryRepository();
