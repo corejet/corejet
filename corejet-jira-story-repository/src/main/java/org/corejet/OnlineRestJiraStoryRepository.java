@@ -113,7 +113,7 @@ public class OnlineRestJiraStoryRepository implements StoryRepository {
 
 		try {
 			JSONResource filterResponse = resty.json(restUrl+"/filter/"+Configuration.getProperty("jira.filter.id"));
-			JSONResource searchResponse = resty.json(filterResponse.get("searchUrl").toString());
+			JSONResource searchResponse = resty.json(filterResponse.get("searchUrl").toString()+"&maxResults=1000");
 			JSONArray issues = (JSONArray)searchResponse.get("issues");
 			for (int i = 0; i < issues.length() ; i++) {
 				JSONObject issue = issues.getJSONObject(i);
@@ -136,7 +136,7 @@ public class OnlineRestJiraStoryRepository implements StoryRepository {
 					try {
 						epicAsString = getStringSafe(issue.getJSONObject("customfield_"+this.epicFieldId),"value");
 					} catch (JSONException e) {
-						logger.warn("Failed to fing epic for story "+story.getId());
+						logger.warn("Failed to find epic for story "+story.getId());
 					}
 				} else {
 					try {
