@@ -77,7 +77,7 @@ public class HtmlReportGeneratorMojo extends AbstractMojo {
 
 			// Merge the reports
 			FilenameFilter filter = new PatternFilenameFilter("corejet-.*");
-			File[] reports = new File(corejetReportDirectory+TEST_OUTPUT_DIRECTORY).listFiles(filter);
+			File[] reports = new File(corejetReportDirectory +TEST_OUTPUT_DIRECTORY).listFiles(filter);
 
 			RequirementsCatalogue result = null;
 			LOGGER.info("Found "+reports.length+" XML report files");

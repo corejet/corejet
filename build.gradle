@@ -2,11 +2,12 @@ allprojects  {
     apply plugin: 'maven'
 
     group = 'org.corejet'
-    version = '0.27'
+    version = version
 }
 
 subprojects {
     apply plugin: 'java'
+
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
 
@@ -18,7 +19,7 @@ subprojects {
     artifacts.archives packageSources
 
     repositories {
-        mavenLocal()
+        jcenter()
 
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
         maven { url "http://repo.maven.apache.org/maven2" }
@@ -26,4 +27,10 @@ subprojects {
 
     configurations.all {
     }
+
+    task copyLibs(type: Copy) {
+        from configurations.runtime
+        into "$buildDir/dependencies"
+    }
+    compileJava.dependsOn copyLibs
 }
