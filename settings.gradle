@@ -1,0 +1,16 @@
+rootProject.name = 'corejet'
+include ':corejet-core'
+include ':jira-story-repository'
+include ':corejet-junit-runner'
+include ':corejet-pageobject-support'
+include ':corejet-visualization'
+include ':corejet-gradle-plugin'
+include ':corejet-maven-plugin'
+
+project(':corejet-core').projectDir = "$rootDir/corejet-core" as File
+project(':jira-story-repository').projectDir = "$rootDir/corejet-jira-story-repository" as File
+project(':corejet-junit-runner').projectDir = "$rootDir/corejet-junit-runner" as File
+project(':corejet-pageobject-support').projectDir = "$rootDir/corejet-pageobject-support" as File
+project(':corejet-visualization').projectDir = "$rootDir/corejet-visualization" as File
+project(':corejet-gradle-plugin').projectDir = "$rootDir/corejet-gradle-plugin" as File
+project(':corejet-maven-plugin').projectDir = "$rootDir/corejet-maven-plugin" as File

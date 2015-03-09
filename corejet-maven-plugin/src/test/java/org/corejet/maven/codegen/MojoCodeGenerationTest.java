@@ -17,8 +17,8 @@ public class MojoCodeGenerationTest {
 	public void simpleTest() throws MojoExecutionException, MojoFailureException, IllegalAccessException, IOException {
 		TestSkeletonGeneratorMojo mojo = new TestSkeletonGeneratorMojo();
 		
-		File requirementsFile = new File("./target/test-classes/corejet-requirements.xml");
-		File outputDir = new File("./target/generated-by-test");
+		File requirementsFile = new File("src/test/resources/corejet-requirements.xml");
+		File outputDir = new File("src/test/resources/generated-by-test");
 		outputDir.mkdirs();
 		
 		ReflectionUtils.setVariableValueInObject(mojo, "requirementsDirectory", requirementsFile);

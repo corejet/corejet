@@ -1,0 +1,8 @@
+
+description = ''
+dependencies {
+  compile project(':corejet-core')
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-support', version:'2.25.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version:'2.25.0'
+  compile project(':corejet-junit-runner')
+}

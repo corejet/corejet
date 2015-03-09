@@ -10,3 +10,11 @@ bin/
 **/.svn/
 svnignore
 **/target/
+
+## Gradle
+build/
+.gradle/
+
+## IntelliJ
+.idea/
+*.iml

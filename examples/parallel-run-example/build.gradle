@@ -1,0 +1,10 @@
+
+description = ''
+dependencies {
+    compile group: 'org.corejet', name: 'corejet-junit-runner', version:'0.25'
+    compile group: 'org.corejet', name: 'jira-story-repository', version:'0.25'
+    compile group: 'org.corejet', name: 'corejet-visualization', version:'0.25'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-support', version:'2.0b3'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-htmlunit-driver', version:'2.0b3'
+    compile group: 'org.corejet', name: 'corejet-pageobject-support', version:'0.25'
+}

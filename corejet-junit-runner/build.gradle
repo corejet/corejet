@@ -1,0 +1,9 @@
+
+description = ''
+dependencies {
+    compile project(':corejet-core')
+    compile group: 'junit', name: 'junit', version:'4.8.2'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version:'1.6'
+    compile group: 'commons-collections', name: 'commons-collections', version:'3.2.1'
+    compile group: 'commons-lang', name: 'commons-lang', version:'2.2'
+}
