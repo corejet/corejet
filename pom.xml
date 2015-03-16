@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>org.corejet</groupId>
 	<artifactId>corejet</artifactId>
-	<version>0.27</version>
+	<version>0.28</version>
 	<packaging>pom</packaging>
 	<url>http://corejet.org</url>
 	<licenses>
@@ -39,6 +39,10 @@
 		<developer>
 			<id>michaeljansbro</id>
 			<name>Mike Ansbro</name>
+		</developer>
+		<developer>
+			<id>antillean</id>
+			<name>Kamal Wood</name>
 		</developer>
 	</developers>
 

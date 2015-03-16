@@ -6,11 +6,11 @@ Learn more on the "http://corejet.org":http://corejet.org website.
 
 h2. Getting started
 
-1. Download the CoreJet source and install it in your local maven repository
+1. Download the CoreJet source and install it in your local maven repository.
 
 bc. mvn clean install
 
-or configure maven to download artifacts from the Maven Central Repository
+or configure maven to download artifacts from the Maven Central Repository.
 
 2. Add your chosen test implementation and story repository dependency to your maven project e.g.
 
@@ -23,22 +23,27 @@ bc. <dependency>
   <artifactId>jira-story-repository</artifactId>
 </dependency>
 
-4. Create epic and story tickets in JIRA (or your chosen story repository)
+Or, if you're using gradle:
 
-5. Populate all stories with their appropriate number of story points
+bc. compile group: 'org.corejet', name: 'corejet-junit-runner', version:'0.28'
+compile group: 'org.corejet', name: 'jira-story-repository', version:'0.28'
 
-6. Create or use an existing field in your story tickets to link them to your epics
+3. Create epic and story tickets in JIRA (or your chosen story repository).
 
-7. Create or use an existing field in your story tickets to contain your acceptance criteria in the form of scenarios.  Scenarios should be written in BDD form e.g.
+4. Populate all stories with their appropriate number of story points.
+
+5. Create or use an existing field in your story tickets to link them to your epics.
+
+6. Create or use an existing field in your story tickets to contain your acceptance criteria in the form of scenarios.  Scenarios should be written in BDD form e.g.
 
 bc. Scenario: User can downloads the latest version of CoreJet
 Given a user on the CoreJet.org website
 When they download the framework
 Then they are provided with the latest version
 
-8. Create a filter to list the the stories to be tested
+7. Create a filter to list the the stories to be tested.
 
-9. In your src/test/recources folder, create a corejet.properties file to point to your story repository e.g.
+8. In your src/test/recources folder, create a corejet.properties file to point to your story repository e.g.
 
 bc. jira.soap.wsdl.url=https://myproject.jira.com/rpc/soap/jirasoapservice-v2?wsdl
 jira.username=username
@@ -50,9 +55,11 @@ jira.epic.fieldid=
 jira.acceptancecriteria.fieldid=10088
 corejet.report.directory=${project.build.directory}/corejet
 
-10. Migrate your stories into test classes, this can be done using the "CoreJet-JIRA-Chrome-plugin":https://github.com/corejet/CoreJet-JIRA-Chrome-plugin examples can be seen in SimpleBddTest.java
+9. Migrate your stories into test classes. This can be done using the "CoreJet-JIRA-Chrome-plugin":https://github.com/corejet/CoreJet-JIRA-Chrome-plugin examples can be seen in SimpleBddTest.java.
 
-11. In order to generate the reports, add the following maven plugin to your project
+10. In order to generate the reports, add either the maven plugin or the gradle plugin to your project.
+
+To add the maven plugin, add the following to your pom.xml.
 
 bc. <plugin>
   <groupId>org.apache.maven.plugins</groupId>
@@ -76,7 +83,31 @@ bc. <plugin>
   </executions>
 </plugin>
 
-12. Reports are output to the target directory as corejet-report.html and can be viewed from any HTML5 capable browser
+To apply the gradle plugin using the new plugins DSL for Gradle 2.1 and higher, add the following to your build.gradle.
+
+bc. plugins {
+    id 'org.corejet.gradle-plugin' version '0.28'
+}
+
+To apply it using the traditional buildscript block method, do:
+
+bc. buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath group: 'org.corejet', name: 'corejet-gradle-plugin', version: '0.28'
+    }
+}
+apply plugin: 'org.corejet.gradle-plugin'
+
+Applying the gradle plugin will add a generateHtmlReport task to your build. You can then have that run as part of your build with:
+
+bc. build.runAfter generateHtmlReport
+
+Your build.gradle file should also include 'org.corejet:corejet-visualization:0.28' as a compile dependency.
+
+11. Reports are output to the target directory as corejet-report.html and can be viewed from any HTML5 capable browser.
 
 h2. CoreJet Modules
 
@@ -87,7 +118,8 @@ CoreJet is made up of several distinct components designed to maximise the exten
 * corejet-junit-runner : a JUnit specific implementation of the test runner
 * corejet-pageobject-support : support for UI testing through the Selenium 2.0 WebDriver framework
 * corejet-vizualisation : JavaScript and CSS to support the HTML reports
-* corejet-maven-plugin : Maven integration for the framework
+* corejet-maven-plugin : Maven plugin that generates the web report
+* corejet-gradle-plugin : Gradle plugin that generates the web report
 
 h2. Annotations
 
