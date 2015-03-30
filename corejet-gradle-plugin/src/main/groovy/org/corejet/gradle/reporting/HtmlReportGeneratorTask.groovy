@@ -73,8 +73,13 @@ public class HtmlReportGeneratorTask extends DefaultTask {
             while ((line = reader.readLine()) != null) {
                 testOutputString += line.replace("'", "");
             }
+            reader.close();
 
-            transformer.transform(new StreamSource(new ByteArrayInputStream(testOutputString.getBytes())), new StreamResult(new FileOutputStream(report)));
+            ByteArrayInputStream transformerInputStream = new ByteArrayInputStream(testOutputString.getBytes());
+            FileOutputStream reportOutputStream = new FileOutputStream(report);
+            transformer.transform(new StreamSource(transformerInputStream), new StreamResult(reportOutputStream));
+            transformerInputStream.close();
+            reportOutputStream.close();
 
             // TODO Hacky fix for line breaks in json
             Map<String, String> replacements = new HashMap<String, String>();

@@ -10,6 +10,9 @@ import spock.lang.Specification
  */
 class HtmlReportGeneratorTaskTest extends Specification {
     def "it generates html reports"() {
+        String anExpectedLine = "<p>Given, there is a user joebloggs with password password</p><p>When, I try to log in " +
+                "with username joebloggs and password\t\t\t\t\tpassword</p><p>Then, the system grants me access</p><p>" +
+                "Then, I am taken to a home page</p></td><td></td><td>pass</td><td>100%</td>"
         given:
         Project project = ProjectBuilder.builder().build()
         project.configurations {}
@@ -27,8 +30,21 @@ class HtmlReportGeneratorTaskTest extends Specification {
         when:
         htmlReportGeneratorTask.generateHtmlReport()
 
+        File corejetReportFile = new File("build/corejet/corejet-report.html");
+
         then:
-        true
-//        2 == File(outputDir, "corejet").list().length
+        corejetReportFile.isFile()
+        corejetReportFile.size() > 18000;
+        containsAnExpectedLine(corejetReportFile, anExpectedLine);
+    }
+
+    def containsAnExpectedLine(corejetReportFile, anExpectedLine) {
+        boolean containsLine = false;
+        corejetReportFile.eachLine { line ->
+            if(line.contains(anExpectedLine)) {
+                containsLine = true;
+            }
+        }
+        return containsLine
     }
 }
