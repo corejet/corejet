@@ -114,6 +114,7 @@ public class CoreJetTestRunner extends BlockJUnit4ClassRunner {
 
 		if (!story.getTitle().equals(storyTitle)){
 			story.setRequirementResolution(ScenarioStatus.MISMATCH.getName());
+			// TODO: Add logging here
 		} 
 
 		for (org.corejet.model.Scenario scenario: story.getScenarios()) {

@@ -136,7 +136,8 @@ public class RequirementsCatalogue implements Cloneable{
 				if (null!=points && !"".equals(points.trim())) {
 					story.setPoints(Integer.parseInt(points));
 				} else {
-					logger.debug("Story with ID:{} has not been estimated.", storyId);
+					logger.debug("Story with ID:{} has not been estimated.  Treating as 1 point", storyId);
+					story.setPoints(1);
 				}
 				story.setRequirementStatus(storyElement.getAttributeValue("requirementStatus"));
 				story.setRequirementResolution(storyElement.getAttributeValue("requirementResolution"));

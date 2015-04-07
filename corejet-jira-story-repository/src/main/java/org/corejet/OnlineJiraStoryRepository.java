@@ -134,8 +134,9 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 				if (storyPointsAsString != null && !storyPointsAsString.trim().equals("")) {
 					story.setPoints(Integer.valueOf(storyPointsAsString.trim()));
 				} else {
-					logger.debug("Story with ID:{} has not been estimated", issue.getKey());
-				}
+					logger.debug("Story with ID:{} has not been estimated. Treating as one point", issue.getKey());
+					story.setPoints(1);
+				} 
 
 				String epicAsString = "unknown";
 				// If iterations is specified, use fix version, if neither is populated set to unknown
