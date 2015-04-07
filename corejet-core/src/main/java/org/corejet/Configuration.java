@@ -3,6 +3,7 @@ package org.corejet;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.google.common.base.Strings;
 import com.google.common.io.Resources;
 
 public class Configuration {
@@ -31,6 +32,16 @@ public class Configuration {
 		return property+"";
 	}
 	
+	public static String getPropertyOrDefault(String propertyName, String defaultValue) {
+		String value = null;
+		try {
+			value = getProperty(propertyName);
+		} catch (RuntimeException e) {
+			// value remains null
+		}
+		return Strings.isNullOrEmpty(value) ? defaultValue : value;
+	}
+	
 	private static synchronized Configuration getInstance() {
 		if (instance==null) {
 			instance = new Configuration();
@@ -39,11 +50,7 @@ public class Configuration {
 	}
 	
 	public static String getBaseDirectory(){
-		try {
-			return getProperty("corejet.report.directory");
-		} catch (RuntimeException e) {
-			return "target/corejet";
-		}
+		return getPropertyOrDefault("corejet.report.directory", "target/corejet");
 	}
 
 }

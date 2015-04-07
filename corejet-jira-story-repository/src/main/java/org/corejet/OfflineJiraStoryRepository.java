@@ -45,11 +45,7 @@ public class OfflineJiraStoryRepository implements StoryRepository {
 	
 	// Allow users to specify an alternative cached requirements file
 	static {
-		String cachedRequirementsFileLocation = Configuration.getProperty(CACHED_REQUIREMENTS_FILE_PROPERTY);
-		if (null==cachedRequirementsFileLocation || "".equals(cachedRequirementsFileLocation)) {
-			// Fall back to the default location
-			cachedRequirementsFileLocation = DEFAULT_CACHED_REQUIREMENTS_FILE_LOCATION;
-		}
+		String cachedRequirementsFileLocation = Configuration.getPropertyOrDefault(CACHED_REQUIREMENTS_FILE_PROPERTY, DEFAULT_CACHED_REQUIREMENTS_FILE_LOCATION);
 		logger.debug("Cached requirements file location = {}", cachedRequirementsFileLocation);
 		corejetRequirementsInputFile = new File(cachedRequirementsFileLocation);
 	}
