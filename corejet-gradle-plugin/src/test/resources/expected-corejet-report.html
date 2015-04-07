@@ -1,0 +1,391 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery-min-1.5.2.js"></script><script type="text/javascript" src="js/jit-yc.js"></script><script type="text/javascript">
+				        
+				        var custom_color_for = function(num_passing, num_pending, total) {
+				            var weighted = ( num_passing + (0.3 * num_pending) ) / total;
+				        
+				            var red = (255 * weighted) / 100;
+				            var green = (255*(100-weighted)) / 100;
+				            
+				            if (total==0) {
+				                red = 0;
+				                green = 0;
+				            }
+				        
+				            return 'rgb('+red+','+green+',0)';
+				        }
+				</script><script type="text/javascript">
+				
+				        var metadata = {
+				            'project':  'Corejet Test Instance',
+				            'testTime': '2011-05-13 20:39:48'
+				        }	        
+			       	 var json = {
+				            'id':       'root',
+				            'name':     'Corejet Test Instance',
+				            'data':     {},
+				            'children': [
+				                            
+                        {   
+                           'id':    'epic-Security',
+                           'name':  'Security',
+                           'data': {
+                                       '$area': 3 * 10,
+                                       
+                                       '$color': custom_color_for(2, 0, 2)
+                                       
+                                   },
+                           'children': [
+                                           
+                                       {
+                                           'id': 'story-CTI-1',
+                                           'name': 'CTI-1',
+                                           'data': {
+                                                     'title': 'As a user I can log in to the System',
+                                                     '$area': 3 * 10,
+                                                           
+                                                     '$color': custom_color_for(2, 0, 2)
+                                                   },
+                                           'children': [
+                                                           
+                                                         {
+                                                           'id':   'CTI-1 :: User successful login',
+                                                           'name': 'User successful login',
+                                                           'data': {
+                                                                     'title': '',
+                                                                     '$color': 
+                                                                               
+                                                                                       'green'
+                                                                                   ,
+                                                                     '$area': (3 / 2) * 10,
+                                                                   },
+                                                           'children': [],
+                                                         },
+   
+                                                         {
+                                                           'id':   'CTI-1 :: Failed login',
+                                                           'name': 'Failed login',
+                                                           'data': {
+                                                                     'title': '',
+                                                                     '$color': 
+                                                                               
+                                                                                       'green'
+                                                                                   ,
+                                                                     '$area': (3 / 2) * 10,
+                                                                   },
+                                                           'children': [],
+                                                         },
+   
+                                                       ]
+                                        },
+   
+                                       ]
+                        },
+   
+                        {   
+                           'id':    'epic-Search',
+                           'name':  'Search',
+                           'data': {
+                                       '$area': 5 * 10,
+                                       
+                                       '$color': custom_color_for(0, 3, 3)
+                                       
+                                   },
+                           'children': [
+                                           
+                                       {
+                                           'id': 'story-CTI-2',
+                                           'name': 'CTI-2',
+                                           'data': {
+                                                     'title': 'As a user I can search for an article',
+                                                     '$area': 5 * 10,
+                                                           
+                                                     '$color': custom_color_for(0, 3, 3)
+                                                   },
+                                           'children': [
+                                                           
+                                                         {
+                                                           'id':   'CTI-2 :: Search for an existing article with multiple matches',
+                                                           'name': 'Search for an existing article with multiple matches',
+                                                           'data': {
+                                                                     'title': '',
+                                                                     '$color': 
+                                                                               
+                                                                                       'grey'
+                                                                                   ,
+                                                                     '$area': (5 / 3) * 10,
+                                                                   },
+                                                           'children': [],
+                                                         },
+   
+                                                         {
+                                                           'id':   'CTI-2 :: Search with no matches',
+                                                           'name': 'Search with no matches',
+                                                           'data': {
+                                                                     'title': '',
+                                                                     '$color': 
+                                                                               
+                                                                                       'grey'
+                                                                                   ,
+                                                                     '$area': (5 / 3) * 10,
+                                                                   },
+                                                           'children': [],
+                                                         },
+   
+                                                         {
+                                                           'id':   'CTI-2 :: Search for an existing article with exactly one match',
+                                                           'name': 'Search for an existing article with exactly one match',
+                                                           'data': {
+                                                                     'title': '',
+                                                                     '$color': 
+                                                                               
+                                                                                       'grey'
+                                                                                   ,
+                                                                     '$area': (5 / 3) * 10,
+                                                                   },
+                                                           'children': [],
+                                                         },
+   
+                                                       ]
+                                        },
+   
+                                       ]
+                        },
+   
+				                        ]
+				                   };
+				</script><script type="text/javascript" src="js/viz.js"></script>
+<link rel="stylesheet" href="css/viz.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/Treemap.css">
+<script type="text/javascript" src="js/jquery.treeTable.min.js"></script><script type="text/javascript">
+					
+					jQuery(function($) {
+						$("#requirements").treeTable({clickableNodeNames: true});
+						$("#problems").treeTable({clickableNodeNames: true});
+					});
+				</script>
+<style type="text/css">
+					/*margin and padding on body element
+					can introduce errors in determining
+					element position and are not recommended;
+					we turn them off as a foundation for YUI
+					CSS treatments. */
+					body {
+					margin:0;
+					padding:0;
+					}
+				</style>
+<link rel="stylesheet" type="text/css" href="css/yui/fonts-min.css">
+<link rel="stylesheet" type="text/css" href="css/yui/tabview.css">
+<script type="text/javascript" src="js/yui/yahoo-dom-event.js"></script><script type="text/javascript" src="js/yui/element-min.js"></script><script type="text/javascript" src="js/yui/tabview-min.js"></script><script type="text/javascript" src="js/yui/history-min.js"></script>
+<title>Corejet Visualization</title>
+</head>
+<body class="yui-skin-sam">
+<div id="canvas">
+<image src="img/CoreJet2.png" style="float: right"></image>
+<h1>
+					Corejet Report - Project
+					<span id="project">Corejet Test Instance</span>
+</h1>
+<p>
+					Tested as of
+					<span id="testTime">2011-05-13 20:39:48</span>
+</p>
+<style> 
+ 
+#yui-history-iframe {
+  position:absolute;
+  top:0; left:0;
+  width:1px; height:1px; /* avoid scrollbars */
+  visibility:hidden;
+}
+ 
+
+ 
+</style>
+<iframe id="yui-history-iframe" src="assets/blank.html"></iframe>
+<input id="yui-history-field" type="hidden">
+<div id="corejet-tabs" class="yui-navset yui-navset-top">
+<ul class="yui-nav">
+<li>
+<a href="#tab1"><em>Scope map</em></a>
+</li>
+<li>
+<a href="#tab2"><em>Scope detail</em></a>
+</li>
+<li>
+<a href="#tab3"><em>Problems</em></a>
+</li>
+</ul>
+<div class="yui-content">
+<div id="tab1">
+<div id="infovis"></div>
+</div>
+<div id="tab2">
+<br>
+<table id="requirements">
+<thead>
+<tr>
+<th id="heading-id">Id</th><th id="heading-item">Description</th><th id="heading-size">Size</th><th id="heading-status">Status</th><th id="heading-progress">Progress</th>
+</tr>
+</thead>
+<tbody>
+<tr class="epic" id="node-epic-Security">
+<td>Security</td><td>Security</td><td>3</td><td>Complete</td><td>100%</td>
+</tr>
+<tr class="story child-of-node-epic-Security" id="node-story-CTI-1">
+<td>CTI-1</td><td>As a user I can log in to the System</td><td>3</td><td>Complete</td><td>100%</td>
+</tr>
+<tr class="scenario child-of-node-story-CTI-1" id="node-scenario-">
+<td>User successful login</td><td>
+<p>Given, there is a user 'joebloggs' with password 'password'</p>
+<p>When, I try to log in with username 'joebloggs' and password 'password'</p>
+<p>Then, the system grants me access</p>
+<p>Then, I am taken to a home page</p>
+</td><td></td><td>pass</td><td>100%</td>
+</tr>
+<tr class="scenario child-of-node-story-CTI-1" id="node-scenario-">
+<td>Failed login</td><td>
+<p>Given, there is a user 'joebloggs' with password 'password'</p>
+<p>When, I try to log in with username 'joebloggs' and password 'badpassword'</p>
+<p>Then, the system does not grant me access</p>
+<p>Then, I am taken back to the login page</p>
+<p>Then, I am shown an error message indicating that my username or password was incorrect</p>
+</td><td></td><td>pass</td><td>100%</td>
+</tr>
+<tr class="epic" id="node-epic-Search">
+<td>Search</td><td>Search</td><td>5</td><td>Incomplete</td><td>0%</td>
+</tr>
+<tr class="story child-of-node-epic-Search" id="node-story-CTI-2">
+<td>CTI-2</td><td>As a user I can search for an article</td><td>5</td><td>Incomplete</td><td>0%</td>
+</tr>
+<tr class="scenario child-of-node-story-CTI-2" id="node-scenario-">
+<td>Search for an existing article with multiple matches</td><td>
+<p>Given, I am logged in to the system as a registered user</p>
+<p>Given, there are three articles with the word 'foo' in their titles</p>
+<p>When, I type 'foo' into a search box</p>
+<p>Then, I am shown a list of search results with three matches</p>
+<p>Then, I can see the first 10 words of each article as a summary</p>
+</td><td></td><td>pending</td><td>0%</td>
+</tr>
+<tr class="scenario child-of-node-story-CTI-2" id="node-scenario-">
+<td>Search with no matches</td><td>
+<p>Given, I am logged in to the system as a registered user</p>
+<p>Given, there are no articles with the word 'bar' in their titles</p>
+<p>When, I type 'bar' into a search box</p>
+<p>Then, I am shown a search results page with no matches</p>
+<p>Then, the page contains a warning that no results were found</p>
+</td><td></td><td>pending</td><td>0%</td>
+</tr>
+<tr class="scenario child-of-node-story-CTI-2" id="node-scenario-">
+<td>Search for an existing article with exactly one match</td><td>
+<p>Given, I am logged in to the system as a registered user</p>
+<p>Given, there is exactly one article with the word 'baz' in its title</p>
+<p>When, I type 'baz' into a search box</p>
+<p>Then, I am shown the article in full</p>
+</td><td></td><td>pending</td><td>0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab3">
+<br>
+<table id="problems">
+<thead>
+<tr>
+<th id="heading-id">Id</th><th id="heading-item">Description</th><th id="heading-progress">Issue</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+</div>
+<script> 
+ 
+(function () {
+ 
+    // The initially selected tab will be chosen in the following order:
+    //
+    // URL fragment identifier (it will be there if the user previously
+    // bookmarked the application in a specific state)
+    //
+    //         or
+    //
+    // "tab0" (default)
+ 
+    var bookmarkedTabViewState = YAHOO.util.History.getBookmarkedState("tabview");
+    var initialTabViewState = bookmarkedTabViewState || "tab0";
+ 
+    var tabView;
+ 
+    // Register our TabView module. Module registration MUST
+    // take place before calling YAHOO.util.History.initialize.
+    YAHOO.util.History.register("tabview", initialTabViewState, function (state) {
+        // This is called after calling YAHOO.util.History.navigate, or after the user
+        // has trigerred the back/forward button. We cannot discrminate between
+        // these two situations.
+ 
+        // "state" can be "tab0", "tab1" or "tab2".
+        // Select the right tab:
+        tabView.set("activeIndex", state.substr(3));
+    });
+ 
+    function handleTabViewActiveTabChange (e) {
+        var newState, currentState;
+ 
+        newState = "tab" + this.getTabIndex(e.newValue);
+ 
+        try {
+            currentState = YAHOO.util.History.getCurrentState("tabview");
+            // The following test is crucial. Otherwise, we end up circling forever.
+            // Indeed, YAHOO.util.History.navigate will call the module onStateChange
+            // callback, which will call tabView.set, which will call this handler
+            // and it keeps going from here...
+            if (newState != currentState) {
+                YAHOO.util.History.navigate("tabview", newState);
+            }
+        } catch (e) {
+            tabView.set("activeIndex", newState.substr(3));
+        }
+    }
+ 
+    function initTabView () {
+        // Instantiate the TabView control...
+        tabView = new YAHOO.widget.TabView("corejet-tabs");
+        tabView.addListener("activeTabChange", handleTabViewActiveTabChange);
+    }
+ 
+    // Use the Browser History Manager onReady method to instantiate the TabView widget.
+    YAHOO.util.History.onReady(function () {
+        var currentState;
+ 
+        initTabView();
+ 
+        // This is the tricky part... The onLoad event is fired when the user
+        // comes back to the page using the back button. In this case, the
+        // actual tab that needs to be selected corresponds to the last tab
+        // selected before leaving the page, and not the initially selected tab.
+        // This can be retrieved using getCurrentState:
+        currentState = YAHOO.util.History.getCurrentState("tabview");
+        tabView.set("activeIndex", currentState.substr(3));
+    });
+ 
+    // Initialize the browser history management library.
+    try {
+        YAHOO.util.History.initialize("yui-history-field", "yui-history-iframe");
+    } catch (e) {
+        // The only exception that gets thrown here is when the browser is
+        // not supported (Opera, or not A-grade) Degrade gracefully.
+        initTabView();
+    }
+ 
+})();
+ 
+</script>
+</div>
+</body>
+</html>

@@ -10,3 +10,13 @@ bin/
 **/.svn/
 svnignore
 **/target/
+
+## Gradle
+build/
+.gradle/
+
+## IntelliJ
+.idea/
+*.iml
+corejet-maven-plugin/src/test/resources/generated-by-test
+corejet-gradle-plugin/src/test/resources/generated-by-test

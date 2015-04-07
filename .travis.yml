@@ -1,0 +1,8 @@
+language: java
+script:
+  - ./gradlew assemble
+  - ./gradlew check
+  - mvn install -DskipTests=true
+  - mvn test
+jdk:
+  - openjdk7

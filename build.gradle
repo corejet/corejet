@@ -1,0 +1,68 @@
+plugins {
+    id 'com.jfrog.bintray' version '1.1'
+    id 'nu.studer.credentials' version '1.0.1'
+}
+
+allprojects  {
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+
+    group = 'org.corejet'
+    version = version
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    task packageSources(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task packageJavadocs(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts.archives packageSources
+    artifacts.archives packageJavadocs
+
+    repositories {
+        jcenter()
+
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "http://repo.maven.apache.org/maven2" }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    bintray {
+        user = credentials.bintrayUser
+        key = credentials.bintrayKey
+
+        publications = ['mavenJava']
+        dryRun = true
+        publish = true
+
+        pkg {
+            repo = 'maven'
+            name = 'corejet-gradle-plugin'
+            licenses = ['Apache-2.0']
+            desc = 'CoreJet BDD testing framework'
+            websiteUrl = 'http://corejet.org/'
+            issueTrackerUrl = 'https://github.com/corejet/corejet/issues'
+            vcsUrl = 'https://github.com/corejet/corejet.git'
+            labels = ['java', 'maven', 'gradle', 'groovy']
+            publicDownloadNumbers = true
+        }
+    }
+}

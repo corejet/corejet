@@ -1,0 +1,14 @@
+buildDir = 'target'
+description = ''
+dependencies {
+    compile group: 'org.apache.maven', name: 'maven-plugin-api', version:'3.0.3'
+    compile group: 'org.apache.maven.plugin-tools', name: 'maven-plugin-tools-java', version:'2.7'
+    compile group: 'com.sun.codemodel', name: 'codemodel', version:'2.4'
+    compile project(':corejet-core')
+    compile project(':corejet-junit-runner')
+    compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
+    compile project(':jira-story-repository')
+    compile project(':corejet-visualization')
+    compile group: 'org.apache.ant', name: 'ant-commons-net', version:'1.8.1'
+    testCompile group: 'org.easymock', name: 'easymock', version:'3.0'
+}

@@ -1,13 +1,12 @@
 package org.corejet.maven.reporting;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.wagon.util.FileUtils;
+import org.codehaus.plexus.util.FileUtils;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author rpickard
