@@ -1,6 +1,5 @@
 package org.corejet;
 
-import gherkin.deps.com.google.gson.JsonObject;
 import gherkin.deps.net.iharder.Base64;
 
 import java.io.File;
@@ -51,6 +50,7 @@ public class OnlineRestJiraStoryRepository implements StoryRepository {
 	private static RequirementsCatalogue requirementsCatalogue;
 
 	private static final int DEFAULT_POINTS = Integer.parseInt(System.getProperty("corejet.defaultpoints", "1"));
+	private static final String DEFAULT_PROJECT = Configuration.getProperty("default.project");
 	private static final Logger logger = LoggerFactory.getLogger(OnlineRestJiraStoryRepository.class);
 
 	public OnlineRestJiraStoryRepository() throws StoryRepositoryException {
@@ -136,7 +136,11 @@ public class OnlineRestJiraStoryRepository implements StoryRepository {
 					try {
 						epicAsString = getStringSafe(issue.getJSONObject("customfield_"+this.epicFieldId),"value");
 					} catch (JSONException e) {
-						logger.warn("Failed to find epic for story "+story.getId());
+						// The epic may be a string value of a property rather than a JSONObject that contains the epic details
+						epicAsString = getStringSafe(issue, "customfield_"+this.epicFieldId);
+						if (epicAsString.equals("unknown")) {
+							logger.warn("Failed to find epic for story "+story.getId());
+						}
 					}
 				} else {
 					try {
@@ -172,7 +176,7 @@ public class OnlineRestJiraStoryRepository implements StoryRepository {
 
 		requirementsCatalogue.setExtractTime(new Date());
 		requirementsCatalogue.setEpics(Lists.newArrayList(epics.values()));
-		requirementsCatalogue.setProject(Configuration.getProperty("default.project"));
+		requirementsCatalogue.setProject(DEFAULT_PROJECT);
 
 		initialized = true;
 	}
@@ -188,8 +192,8 @@ public class OnlineRestJiraStoryRepository implements StoryRepository {
 	/**
 	 * Get an 'Epic', creating a new one if necessary.
 	 * 
-	 * @param epicAsString
-	 * @return
+	 * @param epicAsString - If it's an issue number, not an epic name, lookup the epic name
+	 * @return the Epic
 	 */
 	private Epic lookupOrCreateEpic(String epicAsString) {
 		if (epics.containsKey(epicAsString)) {
@@ -197,8 +201,25 @@ public class OnlineRestJiraStoryRepository implements StoryRepository {
 		}
 
 		Epic newEpic = new Epic();
-		newEpic.setTitle(epicAsString);
 		newEpic.setId(epicAsString);
+		newEpic.setTitle(epicAsString);
+
+		String defaultProject = DEFAULT_PROJECT + "-";
+		// If it's an issue number, not an epic name, lookup the epic name
+		if (epicAsString.startsWith(defaultProject)) {
+			try {
+				logger.info("Getting details for epic: " + epicAsString);
+				String requestURL = restUrl +"/issue/" + epicAsString +"?fields=summary";
+				JSONResource resource = resty.json(requestURL);
+				JSONObject issue = resource.toObject();
+				issue = issue.getJSONObject("fields");
+				newEpic.setTitle(getStringSafe(issue,"summary"));
+			} catch (IOException e) {
+				logger.error("Failed to get epic title for epic " + epicAsString, e);
+			} catch (JSONException e) {
+				logger.error("Failed to get epic title for epic" + epicAsString, e);
+			}
+		}
 
 		epics.put(epicAsString, newEpic);
 		return newEpic;
