@@ -6,6 +6,7 @@ import hudson.plugins.jira.soap.RemoteAuthenticationException;
 import hudson.plugins.jira.soap.RemoteCustomFieldValue;
 import hudson.plugins.jira.soap.RemoteException;
 import hudson.plugins.jira.soap.RemoteIssue;
+import hudson.plugins.jira.soap.RemotePermissionException;
 import hudson.plugins.jira.soap.RemoteVersion;
 
 import java.io.File;
@@ -56,6 +57,7 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 	private static RequirementsCatalogue requirementsCatalogue;
 
 	private static final int DEFAULT_POINTS = Integer.parseInt(System.getProperty("corejet.defaultpoints", "1"));
+	private static final String DEFAULT_PROJECT = Configuration.getProperty("default.project");
 	private static final Logger logger = LoggerFactory.getLogger(OnlineJiraStoryRepository.class);
 
 	public OnlineJiraStoryRepository() throws StoryRepositoryException {
@@ -174,7 +176,7 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 
 		requirementsCatalogue.setExtractTime(new Date());
 		requirementsCatalogue.setEpics(Lists.newArrayList(epics.values()));
-		requirementsCatalogue.setProject(Configuration.getProperty("default.project"));
+		requirementsCatalogue.setProject(DEFAULT_PROJECT);
 
 		initialized = true;
 	}
@@ -182,8 +184,8 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 	/**
 	 * Get an 'Epic', creating a new one if necessary.
 	 * 
-	 * @param epicAsString
-	 * @return
+	 * @param epicAsString - If it's an issue number, not an epic name, lookup the epic name
+	 * @return the Epic
 	 */
 	private Epic lookupOrCreateEpic(String epicAsString) {
 		if (epics.containsKey(epicAsString)) {
@@ -191,8 +193,26 @@ public class OnlineJiraStoryRepository implements StoryRepository {
 		}
 
 		Epic newEpic = new Epic();
-		newEpic.setTitle(epicAsString);
 		newEpic.setId(epicAsString);
+		String defaultProject = DEFAULT_PROJECT + "-";
+		// If it's an issue number, not an epic name, lookup the epic name
+		logger.info("epicAsString="+epicAsString+", defaultProject="+defaultProject);
+		if (epicAsString.startsWith(defaultProject)) {
+			try {
+				RemoteIssue epicIssue = service.getIssueById(securityToken, epicAsString);
+				newEpic.setTitle(epicIssue.getSummary());
+			} catch (RemotePermissionException e) {
+				logger.error("Could not get epic title due to PermissionException", e);
+			} catch (RemoteAuthenticationException e) {
+				logger.error("Could not get epic title due to RemoteAuthenticationException", e);
+			} catch (RemoteException e) {
+				logger.error("Could not get epic title due to RemoteException", e);
+			} catch (java.rmi.RemoteException e) {
+				logger.error("Could not get epic title due to RemoteException", e);
+			}
+		} else {
+			newEpic.setTitle(epicAsString);
+		}
 
 		epics.put(epicAsString, newEpic);
 		return newEpic;

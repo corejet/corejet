@@ -320,7 +320,7 @@
 	<xsl:template match="epic" mode="map">
                         {   
                            'id':    'epic-<xsl:value-of select="@id"/>',
-                           'name':  '<xsl:value-of select="@title"/>',
+                           'name':  '<xsl:value-of select="@id"/>: <xsl:value-of select="@title"/>',
                            'data': {
                                        '$area': <xsl:value-of select="sum(child::story/@points)"/> * 10,
                                        <xsl:variable name="num_passing_epic"><xsl:value-of select="count(story/scenario[@testStatus='pass'])"/></xsl:variable>
@@ -460,7 +460,7 @@
        				<xsl:if test="$total_running_scenarios_epic>0">
                         {   
                            'id':    'epic-running-<xsl:value-of select="@id"/>',
-                           'name':  '<xsl:value-of select="@title"/>',
+                           'name':  '<xsl:value-of select="@id"/>: <xsl:value-of select="@title"/>',
                            'data': {
                                        '$area': <xsl:value-of select="sum(child::story/@points)"/> * 10,
                                                       '$color': <xsl:choose>
@@ -535,7 +535,7 @@
        				<xsl:if test="$total_running_scenarios_epic>0">
                         {   
                            'id':    'epic-timing-<xsl:value-of select="@id"/>',
-                           'name':  '<xsl:value-of select="@title"/>',
+                           'name':  '<xsl:value-of select="@id"/>: <xsl:value-of select="@title"/>',
                            'data': {
                                        '$area': (<xsl:value-of select="sum(child::story/scenario/@duration) + 0.0001 "/> * 1000 ),
                                                       '$color': <xsl:choose>
